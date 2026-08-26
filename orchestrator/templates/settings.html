@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Settings - Captive Framework{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>Global Settings</h2>
+    <p class="subtitle">Default configurations for modules</p>
+</div>
+<div class="config-panel">
+    <p style="color: var(--text-muted); margin-bottom: 20px;">Use this page to save default preferences so you don't have to re-enter them when deploying modules.</p>
+    
+    <div class="form-row">
+        <div class="form-group">
+            <label>Default SSID</label>
+            <input type="text" class="form-control" id="def-ssid" value="{{ settings.ssid }}">
+        </div>
+        <div class="form-group">
+            <label>Default AP IP</label>
+            <input type="text" class="form-control" id="def-ip" value="{{ settings.ap_ip }}">
+        </div>
+    </div>
+    
+    <div class="panel-actions">
+        <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+    </div>
+</div>
+<script>
+function saveSettings() {
+    var payload = {
+        ssid: document.getElementById("def-ssid").value,
+        ap_ip: document.getElementById("def-ip").value
+    };
+    fetch("/api/settings", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    }).then(r => r.json()).then(data => {
+        if(data.success) alert("Settings saved!");
+    });
+}
+</script>
+{% endblock %}

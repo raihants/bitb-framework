@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}BITB Module - Captive Framework{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>Browser in the Browser</h2>
+    <p class="subtitle">Configure and deploy the BITB captive portal</p>
+</div>
+
+<div class="config-panel">
+    <div class="panel-section">
+        <h4>Deployment Mode</h4>
+        <div class="form-group">
+            <label>Select Deployment Mode</label>
+            <div style="display: flex; gap: 20px; margin-top: 8px;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="deploy_mode" value="dev" id="mode-dev" {% if settings.get('deploy_mode', 'dev') == 'dev' %}checked{% endif %} onchange="toggleModeUI()">
+                    <strong>Dev Mode</strong> <span style="color: #aaa; font-size: 0.85rem;">(Local preview without WiFi Adapter / Open in New Tab)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="deploy_mode" value="wifi" id="mode-wifi" {% if settings.get('deploy_mode') == 'wifi' %}checked{% endif %} onchange="toggleModeUI()">
+                    <strong>WiFi AP Mode</strong> <span style="color: #aaa; font-size: 0.85rem;">(Full Hostspot & Captive Portal)</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-section">
+        <h4>Target Configuration</h4>
+        <div class="form-group">
+            <label for="bitb-target">Target Site Template</label>
+            <select id="bitb-target" class="form-control">
+                {% for site in sites %}
+                <option value="{{ site }}" {% if settings.get('bitb_target') == site %}selected{% endif %}>{{ site }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="panel-section" id="network-config-section">
+        <h4>Network Configuration (WiFi AP Mode)</h4>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="bitb-iface">AP Interface</label>
+                <select id="bitb-iface" class="form-control">
+                    <option value="">Select interface</option>
+                    {% for iface in wifi_interfaces %}
+                    <option value="{{ iface.name }}" {% if settings.ap_interface == iface.name %}selected{% endif %}>
+                        {{ iface.name }} {% if iface.supports_ap %}(AP capable){% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bitb-uplink">Internet Interface</label>
+                <select id="bitb-uplink" class="form-control">
+                    <option value="">Select interface</option>
+                    {% for iface in net_interfaces %}
+                    <option value="{{ iface.name }}" {% if settings.internet_interface == iface.name %}selected{% endif %}>
+                        {{ iface.name }} ({{ iface.state }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="bitb-ssid">SSID</label>
+                <input type="text" id="bitb-ssid" class="form-control" value="{{ settings.ssid }}">
+            </div>
+            <div class="form-group">
+                <label for="bitb-nat">Enable NAT</label>
+                <label class="toggle">
+                    <input type="checkbox" id="bitb-nat" {% if settings.enable_nat %}checked{% endif %}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-actions" style="display: flex; gap: 12px; align-items: center;">
+        {% if active_module == 'bitb' %}
+        <button class="btn btn-danger" onclick="stopBitb()">Stop Module</button>
+        <a id="open-site-link" href="#" target="_blank" class="btn btn-primary" style="background: #10b981; border-color: #10b981;">Open Site in New Tab</a>
+        {% elif active_module %}
+        <button class="btn btn-disabled" disabled>Another module is running</button>
+        {% else %}
+        <button class="btn btn-primary" onclick="startBitb()">Deploy BITB</button>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    toggleModeUI();
+    var openLink = document.getElementById("open-site-link");
+    if (openLink) {
+        openLink.href = "http://" + window.location.hostname + ":8080";
+    }
+});
+
+function toggleModeUI() {
+    var isWifi = document.getElementById("mode-wifi").checked;
+    var netSec = document.getElementById("network-config-section");
+    if (netSec) {
+        netSec.style.display = isWifi ? "block" : "none";
+    }
+}
+
+function startBitb() {
+    var isDev = document.getElementById("mode-dev").checked;
+    var mode = isDev ? "dev" : "wifi";
+    var currentHost = window.location.hostname;
+    var payload = {
+        deploy_mode: mode,
+        host_ip: currentHost,
+        bitb_target: document.getElementById("bitb-target").value,
+        ap_interface: document.getElementById("bitb-iface").value,
+        internet_interface: document.getElementById("bitb-uplink").value,
+        ssid: document.getElementById("bitb-ssid").value,
+        enable_nat: document.getElementById("bitb-nat").checked
+    };
+
+    fetch("/api/bitb/start", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    }).then(r => r.json()).then(data => {
+        if (data.success) {
+            if (data.mode === "dev" || isDev) {
+                // Auto open in new tab using host IP
+                var targetUrl = data.url || ("http://" + currentHost + ":8080");
+                window.open(targetUrl, "_blank");
+            }
+            location.reload();
+        } else {
+            alert("Failed: " + (data.error || "Unknown error"));
+        }
+    });
+}
+
+function stopBitb() {
+    fetch("/api/bitb/stop", {method: "POST"})
+        .then(r => r.json())
+        .then(function() { location.reload(); });
+}
+</script>
+{% endblock %}

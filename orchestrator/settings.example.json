@@ -1,0 +1,14 @@
+{
+  "ap_interface": "",
+  "internet_interface": "",
+  "ssid": "Free WiFi",
+  "ap_ip": "10.99.0.1",
+  "ap_netmask": "255.255.255.0",
+  "dhcp_range_start": "10.99.0.50",
+  "dhcp_range_end": "10.99.0.150",
+  "channel": 6,
+  "enable_nat": true,
+  "dns_servers": "8.8.8.8,1.1.1.1",
+  "auto_shutdown": false,
+  "enable_upload": false
+}

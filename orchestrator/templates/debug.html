@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Debug - Captive Framework{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>System Debug</h2>
+    <p class="subtitle">Low-level system information for troubleshooting</p>
+</div>
+
+<div class="status-grid">
+    <div class="status-card" style="grid-column: span 2;">
+        <h4>Active iptables Rules</h4>
+        <pre id="iptables-out" style="background: #111; padding: 16px; border-radius: 6px; font-family: monospace; font-size: 0.8rem; color: var(--text-muted); max-height: 300px; overflow-y: auto;">Loading...</pre>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("/api/debug/iptables").then(r => r.json()).then(data => {
+        var out = "";
+        for (var table in data) {
+            out += "=== Table: " + table + " ===\n" + data[table] + "\n\n";
+        }
+        document.getElementById("iptables-out").textContent = out || "No rules found.";
+    });
+});
+</script>
+{% endblock %}

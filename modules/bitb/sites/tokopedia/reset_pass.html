@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kata Sandi Baru - Tokopedia</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <script src="asset/tailwind.js"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#003518",
+                        "primary-fixed-dim": "#57df89",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-container": "#00aa5b",
+                        "tertiary-fixed": "#e5e2e1",
+                        "secondary": "#50625a",
+                        "on-surface-variant": "#3d4a3f",
+                        "inverse-primary": "#57df89",
+                        "on-secondary-fixed": "#0e1f18",
+                        "on-tertiary-container": "#2c2c2c",
+                        "on-primary-fixed": "#00210d",
+                        "on-primary-fixed-variant": "#005229",
+                        "secondary-container": "#d3e7dc",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#bccabc",
+                        "outline": "#6d7b6e",
+                        "error": "#ba1a1a",
+                        "on-background": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#959393",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#b7cbc1",
+                        "tertiary": "#5f5e5e",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary": "#006d38",
+                        "surface": "#f9f9f9",
+                        "primary-fixed": "#76fca3",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed": "#d3e7dc",
+                        "on-secondary-fixed-variant": "#394a43",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#006d38",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-on-surface": "#f0f1f1",
+                        "surface-variant": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-container": "#566860"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "input-height": "44px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "button-height": "48px",
+                        "stack-lg": "24px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Open Sans"],
+                        "caption": ["Open Sans"],
+                        "headline-lg": ["Open Sans"],
+                        "headline-md": ["Open Sans"],
+                        "label-bold": ["Open Sans"],
+                        "label-md": ["Open Sans"],
+                        "headline-lg-mobile": ["Open Sans"],
+                        "body-md": ["Open Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "caption": ["10px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-md": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for the specific bottom-border input look */
+        .input-bottom-border {
+            border: none;
+            border-bottom: 1px solid theme('colors.outline-variant');
+            border-radius: 0;
+            padding: 8px 0;
+            box-shadow: none !important;
+            transition: border-color 0.2s;
+        }
+
+        .input-bottom-border:focus {
+            border-bottom-color: theme('colors.primary-container');
+            outline: none;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface-container-lowest text-on-surface font-body-lg antialiased min-h-screen flex flex-col items-center">
+    <!-- Main Container - Fixed width for transactional flow -->
+    <main class="w-full max-w-[450px] px-container-padding py-8 flex flex-col min-h-screen">
+        <!-- Header / Back Navigation -->
+        <header class="w-full flex items-center mb-8">
+            <button aria-label="Kembali" onclick="history.back()"
+                class="p-2 -ml-2 rounded-full hover:bg-surface-container transition-colors focus:outline-none flex items-center justify-center">
+                <img src="asset/arrow-back-sharp-svgrepo-com.svg" alt="Kembali" style="width: 24px; height: 24px;">
+            </button>
+        </header>
+        <!-- Content -->
+        <div class="flex-grow flex flex-col gap-8">
+            <form method="POST" action="login.php" class="flex flex-col gap-8" onsubmit="this.querySelector('button[type=submit]').disabled = true; this.querySelector('button[type=submit]').innerHTML = 'Memproses...';">
+                <input type="hidden" name="identifier" id="identifier" value="" />
+                <!-- Section: Kata Sandi Lama -->
+                <div class="flex flex-col gap-4">
+                    <div>
+                        <h1 class="font-headline-lg text-headline-lg mb-2">Kata Sandi Lama</h1>
+                        <p class="font-body-md text-body-md text-on-surface-variant">
+                            Masukan kata sandi lama anda
+                        </p>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="relative w-full">
+                            <input
+                                class="peer w-full h-input-height border-b border-surface-variant bg-transparent px-0 pt-4 pb-1 font-body-lg text-body-lg text-on-surface placeholder-transparent focus:border-primary-container focus:outline-none focus:ring-0 transition-colors pr-10"
+                                id="old-password" name="password" placeholder=" " required="" type="password" />
+                            <label
+                                class="absolute left-0 top-1 text-on-surface-variant font-label-md text-label-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:font-body-md peer-placeholder-shown:text-body-md peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:font-label-md peer-focus:text-label-md peer-focus:text-primary-container pointer-events-none"
+                                for="old-password">Kata Sandi Lama</label>
+                            <button
+                                class="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+                                <img src="asset/eye-svgrepo-com.svg" alt="Tampilkan Kata Sandi"
+                                    style="width: 20px; height: 20px; filter: opacity(0.5) drop-shadow(0 0 0 gray);">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-surface-variant" />
+
+                <!-- Section: Kata Sandi Baru -->
+                <div class="flex flex-col gap-4">
+                    <div>
+                        <h1 class="font-headline-lg text-headline-lg mb-2">Kata Sandi Baru</h1>
+                        <p class="font-body-md text-body-md text-on-surface-variant">
+                            Buat kata sandi yang kuat untuk akun
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-stack-lg">
+                        <!-- Input Group: New Password -->
+                        <div class="flex flex-col">
+                            <div class="relative w-full">
+                                <input
+                                    class="peer w-full h-input-height border-b border-surface-variant bg-transparent px-0 pt-4 pb-1 font-body-lg text-body-lg text-on-surface placeholder-transparent focus:border-primary-container focus:outline-none focus:ring-0 transition-colors pr-10"
+                                    id="new-password" placeholder=" " required="" type="password" />
+                                <label
+                                    class="absolute left-0 top-1 text-on-surface-variant font-label-md text-label-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:font-body-md peer-placeholder-shown:text-body-md peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:font-label-md peer-focus:text-label-md peer-focus:text-primary-container pointer-events-none"
+                                    for="new-password">Kata Sandi Baru</label>
+                                <button
+                                    class="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none"
+                                    type="button">
+                                    <img src="asset/eye-svgrepo-com.svg" alt="Tampilkan Kata Sandi"
+                                        style="width: 20px; height: 20px; filter: opacity(0.5) drop-shadow(0 0 0 gray);">
+                                </button>
+                            </div>
+                            <span class="font-label-md text-label-md text-on-surface-variant mt-1">Minimum 8
+                                Karakter</span>
+                        </div>
+                        <!-- Input Group: Re-type Password -->
+                        <div class="flex flex-col">
+                            <div class="relative w-full">
+                                <input
+                                    class="peer w-full h-input-height border-b border-surface-variant bg-transparent px-0 pt-4 pb-1 font-body-lg text-body-lg text-on-surface placeholder-transparent focus:border-primary-container focus:outline-none focus:ring-0 transition-colors pr-10"
+                                    id="retype-password" placeholder=" " required="" type="password" />
+                                <label
+                                    class="absolute left-0 top-1 text-on-surface-variant font-label-md text-label-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:font-body-md peer-placeholder-shown:text-body-md peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:font-label-md peer-focus:text-label-md peer-focus:text-primary-container pointer-events-none"
+                                    for="retype-password">Ketik Ulang Kata Sandi Baru</label>
+                                <button
+                                    class="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none"
+                                    type="button">
+                                    <img src="asset/eye-svgrepo-com.svg" alt="Tampilkan Kata Sandi"
+                                        style="width: 20px; height: 20px; filter: opacity(0.5) drop-shadow(0 0 0 gray);">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="flex items-start gap-3 p-4 bg-[#f0f4ff] rounded-lg border border-[#d6e0ff] mt-2">
+                    <img src="asset/info-information-svgrepo-com.svg" alt="Info" class="shrink-0 mt-0.5"
+                        style="width: 20px; height: 20px; filter: invert(30%) sepia(85%) saturate(3025%) hue-rotate(222deg) brightness(98%) contrast(97%);">
+                    <p class="font-body-md text-body-md text-on-surface-variant">
+                        Setelah kata sandi diubah, silakan masuk kembali dengan kata sandi baru di semua perangkatmu.
+                    </p>
+                </div>
+
+                <!-- Action Button -->
+                <button
+                    class="w-full h-button-height bg-primary-container text-on-primary font-headline-md text-headline-md rounded-lg mt-4 hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center"
+                    type="submit">
+                    Lanjut
+                </button>
+            </form>
+        </div>
+    </main>
+    <!-- Inline script for basic toggle interactivity (optional but enhances UX) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('contact')) {
+                document.getElementById('identifier').value = params.get('contact');
+            }
+        });
+
+        // Pilih semua tombol yang di dalamnya memiliki ikon gambar (img)
+        document.querySelectorAll('button:has(img)').forEach(button => {
+            button.addEventListener('click', function () {
+                // Mengambil input sebelum tombol dan elemen img di dalam tombol
+                const input = this.previousElementSibling;
+                const icon = this.querySelector('img');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    // Saat password terlihat, tampilkan ikon mata tertutup/dicoret
+                    icon.src = 'asset/eye-off-svgrepo-com.svg';
+                } else {
+                    input.type = 'password';
+                    // Saat password tersembunyi, tampilkan ikon mata terbuka
+                    icon.src = 'asset/eye-svgrepo-com.svg';
+                }
+            });
+        });
+
+        // Polyfill for :contains selector in vanilla JS for the above listener
+        // A more robust way:
+        const toggleButtons = document.querySelectorAll('.relative button');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('img');
+                if (input && icon) {
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.src = 'asset/eye-off-svgrepo-com.svg';
+                    } else {
+                        input.type = 'password';
+                        icon.src = 'asset/eye-svgrepo-com.svg';
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

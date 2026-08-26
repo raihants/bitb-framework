@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Tokopedia - Atur ulang kata sandi</title>
+    <script src="asset/tailwind.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#003518",
+                        "primary-fixed-dim": "#57df89",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-container": "#00aa5b",
+                        "tertiary-fixed": "#e5e2e1",
+                        "secondary": "#50625a",
+                        "on-surface-variant": "#3d4a3f",
+                        "inverse-primary": "#57df89",
+                        "on-secondary-fixed": "#0e1f18",
+                        "on-tertiary-container": "#2c2c2c",
+                        "on-primary-fixed": "#00210d",
+                        "on-primary-fixed-variant": "#005229",
+                        "secondary-container": "#d3e7dc",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#bccabc",
+                        "outline": "#6d7b6e",
+                        "error": "#ba1a1a",
+                        "on-background": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#959393",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#b7cbc1",
+                        "tertiary": "#5f5e5e",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary": "#006d38",
+                        "surface": "#f9f9f9",
+                        "primary-fixed": "#76fca3",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed": "#d3e7dc",
+                        "on-secondary-fixed-variant": "#394a43",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#006d38",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-on-surface": "#f0f1f1",
+                        "surface-variant": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-container": "#566860"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "input-height": "44px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "button-height": "48px",
+                        "stack-lg": "24px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Open Sans"],
+                        "caption": ["Open Sans"],
+                        "headline-lg": ["Open Sans"],
+                        "headline-md": ["Open Sans"],
+                        "label-bold": ["Open Sans"],
+                        "label-md": ["Open Sans"],
+                        "headline-lg-mobile": ["Open Sans"],
+                        "body-md": ["Open Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "caption": ["10px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-md": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface-container-lowest text-on-surface font-body-lg antialiased min-h-screen flex flex-col items-center">
+    <!-- Main Container -->
+    <main class="w-full max-w-[450px] px-container-padding py-8 flex flex-col flex-grow">
+        <!-- Header -->
+        <header class="w-full flex items-center mb-8">
+            <button onclick="history.back()"
+                class="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant flex items-center justify-center">
+                <img src="asset/arrow-back-sharp-svgrepo-com.svg" alt="Kembali" style="width: 24px; height: 24px;">
+            </button>
+        </header>
+        <!-- Content -->
+        <div class="flex flex-col gap-stack-md mb-stack-lg">
+            <h1 class="font-headline-lg text-headline-lg">Atur ulang kata sandi</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Masukkan e-mail atau nomor HP yang terdaftar.
+                Kami akan mengirimkan kode verifikasi untuk atur ulang kata sandi.</p>
+        </div>
+        <!-- Form -->
+        <form action="reset_pass.html" class="flex flex-col gap-stack-lg" onsubmit="this.querySelector('button[type=submit]').disabled = true; this.querySelector('button[type=submit]').innerHTML = 'Memproses...';">
+            <div class="relative w-full">
+                <input
+                    class="peer w-full h-input-height border-b border-surface-variant bg-transparent px-0 pt-4 pb-1 font-body-lg text-body-lg text-on-surface placeholder-transparent focus:border-primary-container focus:outline-none focus:ring-0 transition-colors"
+                    id="contact" name="contact" placeholder=" " required="" type="text" />
+                <label
+                    class="absolute left-0 top-1 text-on-surface-variant font-label-md text-label-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:font-body-md peer-placeholder-shown:text-body-md peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:font-label-md peer-focus:text-label-md peer-focus:text-primary-container pointer-events-none"
+                    for="contact">Nomor HP atau Email</label>
+            </div>
+            <button
+                class="w-full h-button-height bg-primary-container hover:bg-on-primary-fixed-variant text-on-primary font-headline-md text-headline-md rounded-lg mt-4 transition-colors flex items-center justify-center"
+                type="submit">
+                Lanjut
+            </button>
+        </form>
+    </main>
+    <!-- Footer Component Context -->
+    <footer class="w-full py-12 bg-transparent flex flex-col md:flex-row justify-center items-center gap-4 mt-auto">
+        <span class="font-body-md text-body-md text-on-surface-variant">© 2009-2024, PT Tokopedia</span>
+        <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer"
+            href="#">Bantuan</a>
+</body>
+
+</html>

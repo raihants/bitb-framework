@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Logs - Captive Framework{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h2>System Logs</h2>
+    <p class="subtitle">Live output from background services</p>
+</div>
+
+<div class="form-group" style="max-width: 300px; margin-bottom: 20px;">
+    <select id="log-selector" class="form-control" onchange="loadLogs()">
+        <option value="syslog">System Log (/var/log/syslog)</option>
+        <option value="dnsmasq">DNSMasq (/var/log/dnsmasq.log)</option>
+    </select>
+</div>
+
+<div class="config-panel" style="padding: 0; background: #000; border-radius: var(--radius); overflow: hidden;">
+    <div style="background: #1e1e1e; padding: 10px 16px; border-bottom: 1px solid #333; display: flex; justify-content: space-between;">
+        <span style="font-family: monospace; font-size: 0.85rem; color: #aaa;">Terminal Output</span>
+        <button class="btn btn-primary" style="padding: 4px 12px; font-size: 0.8rem;" onclick="loadLogs()">Refresh</button>
+    </div>
+    <pre id="log-output" style="padding: 16px; font-family: monospace; font-size: 0.85rem; color: #0f0; height: 500px; overflow-y: auto; margin: 0; white-space: pre-wrap;"></pre>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", loadLogs);
+
+function loadLogs() {
+    var service = document.getElementById("log-selector").value;
+    var out = document.getElementById("log-output");
+    out.textContent = "Loading logs...";
+    
+    fetch("/api/debug/logs/" + service).then(r => r.json()).then(data => {
+        if (data.error) {
+            out.textContent = data.error;
+            out.style.color = "var(--danger)";
+        } else {
+            out.textContent = data.lines.join("\n") || "No logs available.";
+            out.style.color = "#0f0";
+            out.scrollTop = out.scrollHeight;
+        }
+    }).catch(function() {
+        out.textContent = "Failed to fetch logs.";
+        out.style.color = "var(--danger)";
+    });
+}
+</script>
+{% endblock %}

