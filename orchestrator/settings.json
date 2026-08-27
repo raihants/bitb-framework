@@ -12,6 +12,6 @@
   "dns_servers": "8.8.8.8,1.1.1.1",
   "auto_shutdown": false,
   "enable_upload": false,
-  "bitb_target": "tokopedia",
-  "host_ip": "192.168.8.234"
+  "bitb_target": "instagram",
+  "host_ip": "192.168.8.118"
 }

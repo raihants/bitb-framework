@@ -27,6 +27,8 @@ The framework supports two distinct operational modes:
 
 ## Installation
 
+### Linux (Full Capabilities - Dev Mode & WiFi AP Mode)
+
 Run the automated setup script as root:
 
 ```bash
@@ -35,9 +37,20 @@ sudo ./setup.sh
 
 The script automatically installs Python dependencies, configures the BITB module, unblocks wireless interfaces (`rfkill`), unmasks `hostapd`, and enables IPv4 forwarding.
 
+### Windows (Dev Mode Preview)
+
+1. Ensure **Python 3.8+** and **PHP CLI** are installed on Windows and added to System PATH.
+2. Install Python dependencies:
+   ```cmd
+   cd orchestrator
+   py -m pip install -r requirements.txt
+   ```
+
 ---
 
 ## Usage
+
+### On Linux:
 
 Start the orchestrator dashboard:
 
@@ -46,15 +59,24 @@ cd orchestrator
 sudo python3 app.py
 ```
 
+### On Windows (Dev Mode Only):
+
+Start the orchestrator dashboard:
+
+```cmd
+cd orchestrator
+python app.py
+```
+
 Open your browser to: **`http://127.0.0.1:8888`**
 
 ### Running in Dev Mode:
 1. Navigate to **BITB Module**.
 2. Select **Dev Mode**.
 3. Choose your **Target Site Template** (e.g., `instagram`, `facebook`, `google`).
-4. Click **Deploy BITB**. A new tab will automatically open at `http://localhost:8080`.
+4. Click **Deploy BITB**. Open `http://localhost:8080` in your browser.
 
-### Running in WiFi AP Mode:
+### Running in WiFi AP Mode (Linux Only):
 1. Navigate to **BITB Module**.
 2. Select **WiFi AP Mode**.
 3. Select your **AP Interface** (e.g., `wlan0`) and **Internet Uplink Interface** (e.g., `eth0`).
@@ -64,7 +86,8 @@ Open your browser to: **`http://127.0.0.1:8888`**
 
 ## Requirements
 
-- Linux OS (Kali Linux / Debian / Ubuntu)
+- **Linux OS** (Kali Linux / Debian / Ubuntu) for full AP captive portal mode, OR **Windows** (for Dev Mode local preview only).
 - Python 3.8+ (`flask`, `psutil`, `python-dotenv`)
 - PHP CLI (`php-cli` for running local preview servers)
-- WiFi Adapter supporting AP mode (only required for WiFi AP Mode)
+- WiFi Adapter supporting AP mode (only required for WiFi AP Mode on Linux)
+

@@ -44,6 +44,8 @@ def start_module(module_name, module_dir, settings):
     return {"success": False, "error": "Unknown module"}
 
 
+import sys
+
 def _start_bitb(module_dir, settings):
     mode = settings.get("deploy_mode", "dev")
     target = settings.get("bitb_target", "instagram")
@@ -51,7 +53,7 @@ def _start_bitb(module_dir, settings):
     # Step 1: Copy target site templates using bitb.py
     try:
         subprocess.run(
-            ["python3", "bitb.py", "--target", target],
+            [sys.executable, "bitb.py", "--target", target],
             cwd=module_dir, timeout=10
         )
     except subprocess.TimeoutExpired:
@@ -62,16 +64,26 @@ def _start_bitb(module_dir, settings):
         port = settings.get("dev_port", 8080)
         # Get requested host IP or hostname if provided
         host = settings.get("host_ip") or "localhost"
+        
+        kwargs = {
+            "cwd": module_dir,
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.STDOUT
+        }
+        if os.name != "nt":
+            kwargs["preexec_fn"] = os.setsid
+
         proc = subprocess.Popen(
-            ["php", "-S", f"0.0.0.0:{port}", "-t", os.path.join(module_dir, "sites")],
-            cwd=module_dir,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            preexec_fn=os.setsid
+            ["php", "-S", f"0.0.0.0:{port}", "router.php"],
+            **kwargs
         )
         MANAGED_PROCESSES["bitb"] = proc
         return {"success": True, "pid": proc.pid, "mode": "dev", "url": f"http://{host}:{port}"}
 
     # Mode B: WIFI AP MODE (Full hotspot & captive portal redirect)
+    if os.name == "nt":
+        return {"success": False, "error": "WiFi AP Mode requires Linux OS (hostapd/dnsmasq/iptables)."}
+
     env = os.environ.copy()
     env["WIFI_IFACE"] = settings.get("ap_interface", "wlan0")
     env["UPLINK_IFACE"] = settings.get("internet_interface", "eth0")
@@ -101,14 +113,18 @@ def _stop_bitb(module_dir):
     proc = MANAGED_PROCESSES.pop("bitb", None)
     if proc:
         try:
-            os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-        except ProcessLookupError:
+            if os.name == "nt":
+                proc.terminate()
+            else:
+                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+        except (ProcessLookupError, OSError):
             pass
 
-    subprocess.run(
-        ["sudo", "bash", "cleanup.sh"],
-        cwd=module_dir, capture_output=True
-    )
+    if os.name != "nt":
+        subprocess.run(
+            ["sudo", "bash", "cleanup.sh"],
+            cwd=module_dir, capture_output=True
+        )
     return {"success": True}
 
 
