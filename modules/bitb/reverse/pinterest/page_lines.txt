@@ -1,0 +1,664 @@
+     1	"use client";
+     2	
+     3	import React, { useState } from 'react';
+     4	
+     5	export default function LoginPage() {
+     6	  const [username, setUsername] = useState('');
+     7	  const [password, setPassword] = useState('');
+     8	  const [rememberMe, setRememberMe] = useState(false);
+     9	
+    10	  function handleSubmit(e: React.FormEvent) {
+    11	    e.preventDefault();
+    12	    // ponytail: no backend submission, demo only
+    13	    alert('Demo: Tidak ada data yang dikirim ke server.');
+    14	  }
+    15	
+    16	  return (
+    17	    <div
+    18	      className="min-h-screen flex flex-col"
+    19	      style={{ fontFamily: '"Motiva Sans", Arial, sans-serif', backgroundColor: 'rgb(24, 26, 33)' }}
+    20	    >
+    21	      {/* ── BACKGROUND ── */}
+    22	      <div
+    23	        className="fixed inset-0 z-0"
+    24	        style={{
+    25	          backgroundImage:
+    26	            'radial-gradient(rgba(24, 26, 33, 0) 0%, rgb(24, 26, 33) 100%), url("https://store.fastly.steamstatic.com/public/shared/images/joinsteam/new_login_bg_strong_mask.jpg")',
+    27	          backgroundSize: 'cover',
+    28	          backgroundPosition: 'center top',
+    29	          backgroundRepeat: 'no-repeat',
+    30	        }}
+    31	      />
+    32	
+    33	      {/* ── GLOBAL HEADER ── */}
+    34	      <header
+    35	        className="relative z-50 flex justify-center min-h-[104px] py-4 md:py-0"
+    36	        style={{ backgroundColor: 'rgb(23, 26, 33)' }}
+    37	      >
+    38	        <div className="w-full flex flex-col md:flex-row items-center justify-between px-4 gap-4 md:gap-0" style={{ maxWidth: '940px' }}>
+    39	
+    40	          {/* Logo + Main Nav */}
+    41	          <div className="flex items-center gap-4 md:gap-8">
+    42	            {/* Steam Logo */}
+    43	            <a href="https://store.steampowered.com" className="flex-shrink-0">
+    44	              <img
+    45	                src="https://store.fastly.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
+    46	                alt="Link to the Steam Homepage"
+    47	                style={{ width: '176px', height: 'auto' }}
+    48	              />
+    49	            </a>
+    50	
+    51	            {/* Main Nav: STORE / COMMUNITY / ABOUT / SUPPORT */}
+    52	            <nav className="hidden md:flex items-end h-full pb-0" style={{ gap: '0px' }}>
+    53	              {[
+    54	                { label: 'STORE', active: true },
+    55	                { label: 'COMMUNITY' },
+    56	                { label: 'ABOUT' },
+    57	                { label: 'SUPPORT' },
+    58	              ].map(({ label, active }) => (
+    59	                <a
+    60	                  key={label}
+    61	                  href="#"
+    62	                  className="menuitem"
+    63	                  style={{
+    64	                    display: 'inline-block',
+    65	                    padding: '0 14px',
+    66	                    lineHeight: '104px',
+    67	                    fontSize: '13px',
+    68	                    fontWeight: 400,
+    69	                    color: active ? 'rgb(26, 159, 255)' : 'rgb(184, 182, 180)',
+    70	                    textDecoration: 'none',
+    71	                    borderBottom: active ? '2px solid rgb(26, 159, 255)' : '2px solid transparent',
+    72	                    whiteSpace: 'nowrap',
+    73	                  }}
+    74	                >
+    75	                  {label}
+    76	                </a>
+    77	              ))}
+    78	            </nav>
+    79	          </div>
+    80	
+    81	          {/* Right: Install Steam + sign in + language */}
+    82	          <div className="flex items-center gap-3" style={{ fontSize: '11px' }}>
+    83	            {/* Install Steam */}
+    84	            <a
+    85	              href="#"
+    86	              className="header_installsteam_btn header_installsteam_btn_green"
+    87	              style={{ textDecoration: 'none' }}
+    88	            >
+    89	              <div
+    90	                style={{
+    91	                  display: 'inline-block',
+    92	                  backgroundColor: 'rgb(92, 126, 16)',
+    93	                  backgroundImage:
+    94	                    'url("https://store.fastly.steamstatic.com/public/shared/images/header/btn_header_installsteam_download.png?v=1")',
+    95	                  backgroundRepeat: 'no-repeat',
+    96	                  backgroundPosition: '10px 4px',
+    97	                  padding: '0px 9px 0px 35px',
+    98	                  height: '24px',
+    99	                  lineHeight: '24px',
+   100	                  color: 'rgb(229, 228, 220)',
+   101	                  fontSize: '11px',
+   102	                  whiteSpace: 'nowrap',
+   103	                }}
+   104	              >
+   105	                Install Steam
+   106	              </div>
+   107	            </a>
+   108	
+   109	            <a
+   110	              href="#"
+   111	              className="global_action_link"
+   112	              style={{ color: 'rgb(184, 182, 180)', textDecoration: 'none', fontSize: '11px' }}
+   113	            >
+   114	              sign in
+   115	            </a>
+   116	
+   117	            <span style={{ color: 'rgb(61, 68, 80)' }}>|</span>
+   118	
+   119	            <span
+   120	              className="pulldown"
+   121	              style={{
+   122	                color: 'rgb(184, 182, 180)',
+   123	                fontSize: '11px',
+   124	                cursor: 'pointer',
+   125	                backgroundImage:
+   126	                  'url("https://store.fastly.steamstatic.com/public/shared/images/popups/btn_arrow_down_padded.png")',
+   127	                backgroundRepeat: 'no-repeat',
+   128	                backgroundPosition: 'right center',
+   129	                paddingRight: '14px',
+   130	              }}
+   131	            >
+   132	              language
+   133	            </span>
+   134	          </div>
+   135	        </div>
+   136	      </header>
+   137	
+   138	      {/* ── SUB HEADER (Store Nav) ── */}
+   139	      <div
+   140	        className="relative z-40 flex justify-center"
+   141	        style={{
+   142	          background: 'linear-gradient(to right, rgba(34,58,81,1) 0%, rgba(27,40,56,1) 100%)',
+   143	          borderTop: '1px solid rgba(255,255,255,0.05)',
+   144	        }}
+   145	      >
+   146	        <div
+   147	          className="w-full flex items-center justify-between"
+   148	          style={{ maxWidth: '940px', height: '46px', padding: '0 4px' }}
+   149	        >
+   150	          {/* Sub nav buttons */}
+   151	          <nav className="hidden md:flex items-center h-full">
+   152	            {['Browse', 'Recommendations', 'Categories', 'Ways to Play', 'Special Sections'].map((label) => (
+   153	              <button
+   154	                key={label}
+   155	                style={{
+   156	                  display: 'flex',
+   157	                  flexDirection: 'row',
+   158	                  alignItems: 'center',
+   159	                  gap: '5px',
+   160	                  height: '46px',
+   161	                  padding: '0px 10px',
+   162	                  fontSize: '13px',
+   163	                  fontFamily: '"Motiva Sans", sans-serif',
+   164	                  color: 'rgb(255, 255, 255)',
+   165	                  background: 'transparent',
+   166	                  border: 'none',
+   167	                  cursor: 'pointer',
+   168	                  whiteSpace: 'nowrap',
+   169	                  transition: 'box-shadow 0.2s ease-out, color 0.2s ease-out',
+   170	                }}
+   171	                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgb(103, 193, 245)'; }}
+   172	                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = 'rgb(255, 255, 255)'; }}
+   173	              >
+   174	                {label}
+   175	                {/* Chevron down */}
+   176	                <svg width="10" height="7" viewBox="0 0 10 7" fill="currentColor" style={{ opacity: 0.6 }}>
+   177	                  <path d="M0 0l5 7 5-7z" />
+   178	                </svg>
+   179	              </button>
+   180	            ))}
+   181	          </nav>
+   182	
+   183	          {/* Search bar */}
+   184	          <div className="flex items-center w-full md:w-auto" style={{ height: '32px' }}>
+   185	            <input
+   186	              type="text"
+   187	              name="term"
+   188	              placeholder="Search the store"
+   189	              className="w-full md:w-[300px]"
+   190	              style={{
+   191	                height: '32px',
+   192	                padding: '0px 10px',
+   193	                fontSize: '13px',
+   194	                fontFamily: '"Motiva Sans", Arial, sans-serif',
+   195	                color: 'rgb(255, 255, 255)',
+   196	                background: 'transparent',
+   197	                border: '1px solid rgba(255, 255, 255, 0.14)',
+   198	                borderRight: 'none',
+   199	                borderRadius: '2px 0px 0px 2px',
+   200	                outline: 'none',
+   201	              }}
+   202	            />
+   203	            <button
+   204	              style={{
+   205	                height: '32px',
+   206	                width: '36px',
+   207	                backgroundColor: 'rgba(103, 193, 245, 0.2)',
+   208	                border: '1px solid rgba(255, 255, 255, 0.14)',
+   209	                borderLeft: 'none',
+   210	                borderRadius: '0px 2px 2px 0px',
+   211	                cursor: 'pointer',
+   212	                display: 'flex',
+   213	                alignItems: 'center',
+   214	                justifyContent: 'center',
+   215	              }}
+   216	            >
+   217	              <svg width="16" height="16" viewBox="0 0 16 16" fill="rgb(184, 188, 191)">
+   218	                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+   219	              </svg>
+   220	            </button>
+   221	          </div>
+   222	        </div>
+   223	      </div>
+   224	
+   225	      {/* ── MAIN CONTENT ── */}
+   226	      <main className="relative z-10 flex-1 flex flex-col items-center" style={{ paddingTop: '48px', paddingBottom: '80px' }}>
+   227	        <div style={{ width: '668px', maxWidth: '100%', padding: '0 16px' }}>
+   228	
+   229	          {/* H2: Sign in */}
+   230	          <h2
+   231	            style={{
+   232	              fontSize: '28px',
+   233	              fontWeight: 800,
+   234	              fontFamily: '"Motiva Sans", sans-serif',
+   235	              color: 'rgb(255, 255, 255)',
+   236	              padding: '2px 0px 0px',
+   237	              margin: '0px 0px 10px',
+   238	            }}
+   239	          >
+   240	            Sign in
+   241	          </h2>
+   242	
+   243	          {/* Login Card */}
+   244	          <div
+   245	            className="flex flex-col md:flex-row bg-[#181a21] border border-white/10"
+   246	          >
+   247	            {/* ── Left Column: Form ── */}
+   248	            <div style={{ flex: '1', padding: '24px 24px 24px 24px' }}>
+   249	              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+   250	
+   251	                {/* Account Name */}
+   252	                <div style={{ marginBottom: '16px' }}>
+   253	                  <label
+   254	                    style={{
+   255	                      display: 'block',
+   256	                      fontSize: '12px',
+   257	                      fontWeight: 400,
+   258	                      color: 'rgb(26, 159, 255)',
+   259	                      marginBottom: '6px',
+   260	                      letterSpacing: '0.04em',
+   261	                    }}
+   262	                  >
+   263	                    Sign in with account name
+   264	                  </label>
+   265	                  <input
+   266	                    type="text"
+   267	                    value={username}
+   268	                    onChange={(e) => setUsername(e.target.value)}
+   269	                    autoComplete="username"
+   270	                    style={{
+   271	                      width: '100%',
+   272	                      boxSizing: 'border-box',
+   273	                      backgroundColor: 'rgb(50, 53, 60)',
+   274	                      color: 'rgb(255, 255, 255)',
+   275	                      fontSize: '15px',
+   276	                      fontFamily: 'Arial',
+   277	                      padding: '10px',
+   278	                      border: '1px solid rgb(50, 53, 60)',
+   279	                      borderRadius: '2px',
+   280	                      outline: 'none',
+   281	                    }}
+   282	                    onFocus={(e) => { e.currentTarget.style.borderColor = 'rgb(26, 159, 255)'; }}
+   283	                    onBlur={(e) => { e.currentTarget.style.borderColor = 'rgb(50, 53, 60)'; }}
+   284	                  />
+   285	                </div>
+   286	
+   287	                {/* Password */}
+   288	                <div style={{ marginBottom: '16px' }}>
+   289	                  <label
+   290	                    style={{
+   291	                      display: 'block',
+   292	                      fontSize: '12px',
+   293	                      fontWeight: 400,
+   294	                      color: 'rgb(172, 178, 184)',
+   295	                      marginBottom: '6px',
+   296	                      letterSpacing: '0.04em',
+   297	                    }}
+   298	                  >
+   299	                    Password
+   300	                  </label>
+   301	                  <input
+   302	                    type="password"
+   303	                    value={password}
+   304	                    onChange={(e) => setPassword(e.target.value)}
+   305	                    autoComplete="current-password"
+   306	                    style={{
+   307	                      width: '100%',
+   308	                      boxSizing: 'border-box',
+   309	                      backgroundColor: 'rgb(50, 53, 60)',
+   310	                      color: 'rgb(255, 255, 255)',
+   311	                      fontSize: '15px',
+   312	                      fontFamily: 'Arial',
+   313	                      padding: '10px',
+   314	                      border: '1px solid rgb(50, 53, 60)',
+   315	                      borderRadius: '2px',
+   316	                      outline: 'none',
+   317	                    }}
+   318	                    onFocus={(e) => { e.currentTarget.style.borderColor = 'rgb(26, 159, 255)'; }}
+   319	                    onBlur={(e) => { e.currentTarget.style.borderColor = 'rgb(50, 53, 60)'; }}
+   320	                  />
+   321	                </div>
+   322	
+   323	                {/* Remember Me */}
+   324	                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+   325	                  <div
+   326	                    onClick={() => setRememberMe(!rememberMe)}
+   327	                    style={{
+   328	                      width: '16px',
+   329	                      height: '16px',
+   330	                      backgroundColor: 'rgb(50, 53, 60)',
+   331	                      border: '1px solid rgba(255,255,255,0.2)',
+   332	                      borderRadius: '2px',
+   333	                      cursor: 'pointer',
+   334	                      display: 'flex',
+   335	                      alignItems: 'center',
+   336	                      justifyContent: 'center',
+   337	                      flexShrink: 0,
+   338	                    }}
+   339	                  >
+   340	                    {rememberMe && (
+   341	                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="rgb(255,255,255)" strokeWidth="2">
+   342	                        <path strokeLinecap="round" strokeLinejoin="round" d="M1 4l3 3 5-6" />
+   343	                      </svg>
+   344	                    )}
+   345	                  </div>
+   346	                  <label
+   347	                    onClick={() => setRememberMe(!rememberMe)}
+   348	                    style={{ fontSize: '13px', color: 'rgb(172, 178, 184)', cursor: 'pointer', userSelect: 'none' }}
+   349	                  >
+   350	                    Remember me
+   351	                  </label>
+   352	                </div>
+   353	
+   354	                {/* Sign in Button */}
+   355	                <button
+   356	                  type="submit"
+   357	                  className="DjSvCZoKKfoNSmarsEcTS"
+   358	                  style={{
+   359	                    display: 'block',
+   360	                    width: '100%',
+   361	                    padding: '12px',
+   362	                    fontSize: '16px',
+   363	                    fontFamily: '"Motiva Sans", sans-serif',
+   364	                    fontWeight: 400,
+   365	                    color: 'rgb(255, 255, 255)',
+   366	                    background: 'linear-gradient(90deg, rgb(6, 191, 255) 0%, rgb(45, 115, 255) 100%)',
+   367	                    border: 'none',
+   368	                    borderRadius: '2px',
+   369	                    cursor: 'pointer',
+   370	                    textAlign: 'center',
+   371	                  }}
+   372	                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = '0.9'; }}
+   373	                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = '1'; }}
+   374	                >
+   375	                  Sign in
+   376	                </button>
+   377	
+   378	                {/* Help link */}
+   379	                <div style={{ textAlign: 'center', marginTop: '12px' }}>
+   380	                  <a
+   381	                    href="#"
+   382	                    style={{
+   383	                      fontSize: '13px',
+   384	                      color: 'rgb(139, 146, 154)',
+   385	                      textDecoration: 'none',
+   386	                    }}
+   387	                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(255,255,255)'; }}
+   388	                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(139, 146, 154)'; }}
+   389	                  >
+   390	                    Help, I can&apos;t sign in
+   391	                  </a>
+   392	                </div>
+   393	              </form>
+   394	
+   395	              {/* New to Steam + Create an account */}
+   396	              <div
+   397	                className="login_btn_ctn login_bottom_row_item"
+   398	                style={{
+   399	                  display: 'flex',
+   400	                  flexDirection: 'column',
+   401	                  justifyContent: 'center',
+   402	                  alignItems: 'center',
+   403	                  marginTop: '20px',
+   404	                  padding: '0px',
+   405	                }}
+   406	              >
+   407	                <div
+   408	                  className="headline"
+   409	                  style={{ fontSize: '12px', color: 'rgb(233, 233, 233)', marginBottom: '4px' }}
+   410	                >
+   411	                  New to Steam?
+   412	                </div>
+   413	                <a
+   414	                  href="#"
+   415	                  className="login_create_btn btn_blue_steamui btn_medium"
+   416	                  style={{
+   417	                    display: 'block',
+   418	                    fontSize: '12px',
+   419	                    fontFamily: '"Motiva Sans", sans-serif',
+   420	                    color: 'rgb(255, 255, 255)',
+   421	                    backgroundColor: 'rgb(61, 68, 80)',
+   422	                    padding: '3px 20px',
+   423	                    margin: '10px 0px',
+   424	                    borderRadius: '2px',
+   425	                    textDecoration: 'none',
+   426	                    textAlign: 'center',
+   427	                  }}
+   428	                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'rgb(75, 83, 98)'; }}
+   429	                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'rgb(61, 68, 80)'; }}
+   430	                >
+   431	                  <span>Create an account</span>
+   432	                </a>
+   433	                <a
+   434	                  href="#"
+   435	                  className="login_join_desc"
+   436	                  style={{
+   437	                    fontSize: '11px',
+   438	                    color: 'rgb(139, 146, 154)',
+   439	                    textDecoration: 'none',
+   440	                  }}
+   441	                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(255,255,255)'; }}
+   442	                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(139, 146, 154)'; }}
+   443	                >
+   444	                  Learn more about Steam
+   445	                </a>
+   446	              </div>
+   447	            </div>
+   448	
+   449	            {/* ── Divider ── */}
+   450	            <div
+   451	              className="hidden md:block w-[1px] bg-white/10 my-[20px] shrink-0"
+   452	            />
+   453	            {/* Mobile Divider */}
+   454	            <div
+   455	              className="block md:hidden h-[1px] w-full bg-white/10 shrink-0"
+   456	            />
+   457	
+   458	            {/* ── Right Column: QR Code ── */}
+   459	            <div
+   460	              className="w-full md:w-[270px] shrink-0 p-[24px] flex flex-col items-center"
+   461	            >
+   462	              <div
+   463	                style={{
+   464	                  fontSize: '12px',
+   465	                  color: 'rgb(26, 159, 255)',
+   466	                  marginBottom: '12px',
+   467	                  alignSelf: 'flex-start',
+   468	                }}
+   469	              >
+   470	                Or sign in with QR code
+   471	              </div>
+   472	
+   473	              {/* QR Code box */}
+   474	              <div
+   475	                style={{
+   476	                  width: '200px',
+   477	                  height: '200px',
+   478	                  backgroundColor: 'white',
+   479	                  borderRadius: '4px',
+   480	                  padding: '8px',
+   481	                  display: 'flex',
+   482	                  alignItems: 'center',
+   483	                  justifyContent: 'center',
+   484	                  marginBottom: '16px',
+   485	                  position: 'relative',
+   486	                }}
+   487	              >
+   488	                {/* QR placeholder — real QR is a blob: URL per session */}
+   489	                <svg
+   490	                  width="184"
+   491	                  height="184"
+   492	                  viewBox="0 0 184 184"
+   493	                  xmlns="http://www.w3.org/2000/svg"
+   494	                  style={{ imageRendering: 'pixelated' }}
+   495	                >
+   496	                  {/* Finder pattern TL */}
+   497	                  <rect x="0" y="0" width="56" height="56" fill="black" rx="4" />
+   498	                  <rect x="8" y="8" width="40" height="40" fill="white" />
+   499	                  <rect x="16" y="16" width="24" height="24" fill="black" />
+   500	                  {/* Finder pattern TR */}
+   501	                  <rect x="128" y="0" width="56" height="56" fill="black" rx="4" />
+   502	                  <rect x="136" y="8" width="40" height="40" fill="white" />
+   503	                  <rect x="144" y="16" width="24" height="24" fill="black" />
+   504	                  {/* Finder pattern BL */}
+   505	                  <rect x="0" y="128" width="56" height="56" fill="black" rx="4" />
+   506	                  <rect x="8" y="136" width="40" height="40" fill="white" />
+   507	                  <rect x="16" y="144" width="24" height="24" fill="black" />
+   508	                  {/* Timing pattern H */}
+   509	                  {[64,72,80,88,96,104,112,120].map((x, i) => i % 2 === 0 && (
+   510	                    <rect key={x} x={x} y="56" width="8" height="8" fill="black" />
+   511	                  ))}
+   512	                  {/* Timing pattern V */}
+   513	                  {[64,72,80,88,96,104,112,120].map((y, i) => i % 2 === 0 && (
+   514	                    <rect key={y} x="56" y={y} width="8" height="8" fill="black" />
+   515	                  ))}
+   516	                  {/* Data modules (decorative) */}
+   517	                  {[
+   518	                    [64,64],[80,64],[96,64],[112,64],
+   519	                    [64,72],[88,72],[104,72],[120,72],
+   520	                    [72,80],[96,80],[112,80],
+   521	                    [64,88],[80,88],[104,88],
+   522	                    [72,96],[88,96],[120,96],
+   523	                    [64,104],[96,104],[112,104],
+   524	                    [80,112],[104,112],[120,112],
+   525	                    [64,120],[72,120],[88,120],[104,120],
+   526	                    [64,128],[80,128],[96,128],[112,128],
+   527	                    [72,136],[88,136],[120,136],
+   528	                    [64,144],[104,144],
+   529	                    [80,152],[96,152],[112,152],
+   530	                    [128,64],[136,64],[152,64],[160,64],
+   531	                    [128,72],[144,72],[168,72],
+   532	                    [136,80],[152,80],
+   533	                    [128,88],[160,88],[176,88],
+   534	                    [136,96],[144,96],[168,96],
+   535	                    [128,104],[152,104],[176,104],
+   536	                    [136,112],[160,112],
+   537	                    [128,120],[144,120],[168,120],[176,120],
+   538	                  ].map(([x, y], i) => (
+   539	                    <rect key={i} x={x} y={y} width="8" height="8" fill="black" />
+   540	                  ))}
+   541	                  {/* Steam logo center */}
+   542	                  <rect x="76" y="76" width="32" height="32" fill="white" />
+   543	                  <image
+   544	                    href="https://store.fastly.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
+   545	                    x="80" y="80" width="24" height="24"
+   546	                  />
+   547	                </svg>
+   548	              </div>
+   549	
+   550	              <p
+   551	                style={{
+   552	                  fontSize: '12px',
+   553	                  fontFamily: '"Motiva Sans", sans-serif',
+   554	                  color: 'rgb(139, 146, 154)',
+   555	                  textAlign: 'center',
+   556	                  lineHeight: '18px',
+   557	                  margin: '0',
+   558	                }}
+   559	              >
+   560	                Use the{' '}
+   561	                <a
+   562	                  href="#"
+   563	                  style={{ color: 'rgb(255, 255, 255)', textDecoration: 'underline' }}
+   564	                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(26, 159, 255)'; }}
+   565	                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(255, 255, 255)'; }}
+   566	                >
+   567	                  Steam Mobile App
+   568	                </a>
+   569	                {' '}to sign in via QR code
+   570	              </p>
+   571	            </div>
+   572	          </div>
+   573	        </div>
+   574	      </main>
+   575	
+   576	      {/* ── FOOTER ── */}
+   577	      <footer
+   578	        className="relative z-10"
+   579	        style={{
+   580	          backgroundColor: 'rgb(23, 26, 33)',
+   581	          borderTop: '1px solid rgba(255,255,255,0.06)',
+   582	          padding: '20px 0',
+   583	        }}
+   584	      >
+   585	        <div
+   586	          style={{
+   587	            maxWidth: '940px',
+   588	            margin: '0 auto',
+   589	            padding: '0 16px',
+   590	            display: 'flex',
+   591	            flexDirection: 'row',
+   592	            gap: '40px',
+   593	            flexWrap: 'wrap',
+   594	          }}
+   595	        >
+   596	          {/* Valve logo */}
+   597	          <div style={{ flexShrink: 0 }}>
+   598	            <img
+   599	              src="https://store.fastly.steamstatic.com/public/shared/images/responsive/footerLogo_valve_new.png"
+   600	              alt=""
+   601	              style={{ width: '92px', height: '26px', opacity: 0.6 }}
+   602	            />
+   603	            <div style={{ fontSize: '10px', color: 'rgb(100, 100, 100)', marginTop: '8px', maxWidth: '160px', lineHeight: '14px' }}>
+   604	              © 2024 Valve Corporation. All rights reserved. All trademarks are property of their respective owners in the US and other countries.
+   605	            </div>
+   606	          </div>
+   607	
+   608	          {/* Footer columns */}
+   609	          {[
+   610	            {
+   611	              head: 'STEAM',
+   612	              links: ['About Steam', 'Steam SSA', 'Steamworks', 'Steam Distribution', 'Gift Cards'],
+   613	            },
+   614	            {
+   615	              head: 'VALVE',
+   616	              links: ['Jobs', 'Steam', 'Half-Life', 'Portal', 'Counter-Strike'],
+   617	            },
+   618	            {
+   619	              head: 'LEGAL',
+   620	              links: ['Privacy Policy', 'Legal', 'Steam Subscriber Agreement', 'Refunds', 'Cookies'],
+   621	            },
+   622	            {
+   623	              head: 'MORE',
+   624	              links: ['Accessibility', 'Contact Steam Support'],
+   625	            },
+   626	          ].map(({ head, links }) => (
+   627	            <div key={head}>
+   628	              <h3
+   629	                style={{
+   630	                  fontSize: '13px',
+   631	                  fontWeight: 700,
+   632	                  fontFamily: '"Motiva Sans", sans-serif',
+   633	                  color: 'rgb(184, 188, 191)',
+   634	                  lineHeight: '17px',
+   635	                  margin: '0 0 8px',
+   636	                }}
+   637	              >
+   638	                {head}
+   639	              </h3>
+   640	              <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+   641	                {links.map((link) => (
+   642	                  <li key={link} style={{ marginBottom: '4px' }}>
+   643	                    <a
+   644	                      href="#"
+   645	                      style={{
+   646	                        fontSize: '11px',
+   647	                        color: 'rgb(100, 100, 100)',
+   648	                        textDecoration: 'none',
+   649	                      }}
+   650	                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(184, 188, 191)'; }}
+   651	                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgb(100, 100, 100)'; }}
+   652	                    >
+   653	                      {link}
+   654	                    </a>
+   655	                  </li>
+   656	                ))}
+   657	              </ul>
+   658	            </div>
+   659	          ))}
+   660	        </div>
+   661	      </footer>
+   662	    </div>
+   663	  );
+   664	}
