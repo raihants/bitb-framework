@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Font asli Tokopedia */
+  --font-sans: "Open Sauce One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", sans-serif;
+
+  /* Token warna Tokopedia (dipakai via text-primary, border-placeholder, dst.) */
+  --color-primary: #00aa5b;
+  --color-primary-hover: #009a52;
+  --color-foreground: #212121;
+  --color-muted-foreground: #6d7588;
+  --color-placeholder: #bfc9d9;
+  --color-disabled-bg: #e4ebf5;
+  --color-disabled-text: #aab4c8;
+  --color-divider: #d6dfeb;
+  --color-subtle-surface: #f0f3f7;
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

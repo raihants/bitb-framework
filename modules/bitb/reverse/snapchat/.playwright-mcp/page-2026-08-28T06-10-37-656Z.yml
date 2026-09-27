@@ -1,0 +1,86 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]: Klon UI non-fungsional untuk latihan frontend. Tidak berafiliasi dengan Meta/Facebook — form tidak mengirim data apa pun.
+  - main [ref=f3e4]:
+    - generic [ref=f3e5]:
+      - img "Facebook" [ref=f3e7]
+      - generic [ref=f3e10]:
+        - heading "Log in to Facebook" [level=1] [ref=f3e11]
+        - generic [ref=f3e12]:
+          - textbox "Email address or mobile number" [ref=f3e14]
+          - textbox "Password" [ref=f3e16]
+          - button "Log in" [ref=f3e17]
+          - link "Forgotten password?" [ref=f3e18] [cursor=pointer]:
+            - /url: "#"
+        - link "Create new account" [ref=f3e20] [cursor=pointer]:
+          - /url: "#"
+        - img "Meta" [ref=f3e22]
+  - contentinfo [ref=f3e25]:
+    - generic [ref=f3e26]:
+      - link "English (UK)" [ref=f3e27] [cursor=pointer]:
+        - /url: "#"
+      - link "Bahasa Indonesia" [ref=f3e28] [cursor=pointer]:
+        - /url: "#"
+      - link "Basa Jawa" [ref=f3e29] [cursor=pointer]:
+        - /url: "#"
+      - link "Bahasa Melayu" [ref=f3e30] [cursor=pointer]:
+        - /url: "#"
+      - link "日本語" [ref=f3e31] [cursor=pointer]:
+        - /url: "#"
+      - link "العربية" [ref=f3e32] [cursor=pointer]:
+        - /url: "#"
+      - link "Français (France)" [ref=f3e33] [cursor=pointer]:
+        - /url: "#"
+      - link "More languages…" [ref=f3e34] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=f3e35]:
+      - link "Sign up" [ref=f3e36] [cursor=pointer]:
+        - /url: "#"
+      - link "Log in" [ref=f3e37] [cursor=pointer]:
+        - /url: "#"
+      - link "Messenger" [ref=f3e38] [cursor=pointer]:
+        - /url: "#"
+      - link "Facebook Lite" [ref=f3e39] [cursor=pointer]:
+        - /url: "#"
+      - link "Video" [ref=f3e40] [cursor=pointer]:
+        - /url: "#"
+      - link "Meta Pay" [ref=f3e41] [cursor=pointer]:
+        - /url: "#"
+      - link "Meta Store" [ref=f3e42] [cursor=pointer]:
+        - /url: "#"
+      - link "Meta Quest" [ref=f3e43] [cursor=pointer]:
+        - /url: "#"
+      - link "Ray-Ban Meta" [ref=f3e44] [cursor=pointer]:
+        - /url: "#"
+      - link "Meta AI" [ref=f3e45] [cursor=pointer]:
+        - /url: "#"
+      - link "Instagram" [ref=f3e46] [cursor=pointer]:
+        - /url: "#"
+      - link "Threads" [ref=f3e47] [cursor=pointer]:
+        - /url: "#"
+      - link "Privacy Policy" [ref=f3e48] [cursor=pointer]:
+        - /url: "#"
+      - link "Privacy Centre" [ref=f3e49] [cursor=pointer]:
+        - /url: "#"
+      - link "Meta in Indonesia" [ref=f3e50] [cursor=pointer]:
+        - /url: "#"
+      - link "About" [ref=f3e51] [cursor=pointer]:
+        - /url: "#"
+      - link "Create ad" [ref=f3e52] [cursor=pointer]:
+        - /url: "#"
+      - link "Create Page" [ref=f3e53] [cursor=pointer]:
+        - /url: "#"
+      - link "Developers" [ref=f3e54] [cursor=pointer]:
+        - /url: "#"
+      - link "Careers" [ref=f3e55] [cursor=pointer]:
+        - /url: "#"
+      - link "Cookies" [ref=f3e56] [cursor=pointer]:
+        - /url: "#"
+      - link "AdChoices" [ref=f3e57] [cursor=pointer]:
+        - /url: "#"
+      - link "Terms" [ref=f3e58] [cursor=pointer]:
+        - /url: "#"
+      - link "Help" [ref=f3e59] [cursor=pointer]:
+        - /url: "#"
+      - link "Contact uploading and non-users" [ref=f3e60] [cursor=pointer]:
+        - /url: "#"
+    - paragraph [ref=f3e61]: Meta © 2025
