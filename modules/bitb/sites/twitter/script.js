@@ -120,10 +120,37 @@ document.querySelector('.back').addEventListener('click', () => {
   }
 });
 
-for (const provider of ['google', 'apple']) {
-  document.querySelector(`#${provider}-choice`).addEventListener('click', () => {
-    notice.textContent = `${provider === 'google' ? 'Google' : 'Apple'} sign-in requires the original service.`;
-  });
-}
+let mockAuthPopup;
+let mockAuthState;
+
+window.addEventListener('message', (event) => {
+  if (event.origin !== location.origin || event.source !== mockAuthPopup) return;
+  const result = event.data;
+  if (result?.type !== 'mock-oauth-callback' || result.state !== mockAuthState) return;
+  if (result.status !== 'success' && result.status !== 'cancelled') return;
+  if (result.status === 'success' && (typeof result.code !== 'string' || !result.code.startsWith('mock-'))) return;
+
+  mockAuthState = undefined;
+  mockAuthPopup = undefined;
+  notice.textContent = result.status === 'success'
+    ? 'Mock OAuth callback received. No real account was signed in.'
+    : 'Mock OAuth sign-in cancelled.';
+  window.dispatchEvent(new CustomEvent('mock-oauth-callback', { detail: result }));
+});
+
+document.querySelector('#google-choice').addEventListener('click', () => {
+  mockAuthState = crypto.randomUUID();
+  const url = new URL('mock-auth.html', location.href);
+  url.searchParams.set('state', mockAuthState);
+  mockAuthPopup = window.open(url.href, 'local-auth-demo', 'popup,width=520,height=650');
+  if (!mockAuthPopup) {
+    mockAuthState = undefined;
+    notice.textContent = 'Allow pop-ups to test local authentication.';
+  }
+});
+
+document.querySelector('#apple-choice').addEventListener('click', () => {
+  notice.textContent = 'Apple sign-in requires the original service.';
+});
 
 username.focus({ preventScroll: true });
