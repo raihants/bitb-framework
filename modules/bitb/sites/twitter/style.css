@@ -70,3 +70,26 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
 .phone-continue{width:calc(100% + 16px);margin:28px 0 0 -8px}
 @media(max-width:700px){body{display:block}.dialog{width:100%;height:100dvh;max-height:none;background:#000;border:0;border-radius:0}.header{max-width:calc(100% - 64px);width:auto;margin:32px 32px 0 68px;display:flex;align-items:center;gap:16px;min-height:30px}.logo{width:32px;height:32px;margin:0}h1{font-size:20px;line-height:25px;margin:0}.subtitle{display:none}.content{width:auto;max-width:none;margin:30px 32px 0}.choices{gap:21px}.divider{margin:19px 0 20px}.continue{margin-top:36px;width:100%;margin-left:0}.legal{width:100%;margin-left:0}.phone-step{width:auto;max-width:none;margin:32px 20px 0}.phone-step .phone-logo{width:48px;height:48px;margin:0 auto 34px;position:relative;left:-10px}.phone-step h2{font-size:24px;line-height:30px;white-space:normal}.country-menu{top:176px;left:18px;height:min(386px,calc(100dvh - 240px))}.phone-bottom{top:230px}.phone-continue{width:100%;margin-left:0}.privacy-popup{bottom:22px}}
 @media(max-width:360px){.header{gap:8px;margin-left:52px}h1{font-size:18px}.content{margin-left:16px;margin-right:16px}}
+@media(prefers-color-scheme:light){
+  :root{color-scheme:light;background:#d1d1d1;color:#0f1419}
+  .dialog{background:#fff;border-color:#e5e7eb;box-shadow:0 8px 20px #0002}
+  .back{background:transparent;color:#0f1419}
+  .back:hover{background:#e8e8dc}
+  .subtitle,.field label,.legal,.phone-bottom>p,.privacy-trigger{color:#71767b}
+  .choice:first-child{background:#000;color:#fff}
+  .choice:first-child:hover{background:#272c30}
+  .choice:last-child{background:#fff;color:#0f1419;border:1px solid #d1d5db}
+  .choice:last-child:hover{background:#f7f7f7}
+  .divider{color:#71767b}
+  .divider:before,.divider:after{background:#d4d8db}
+  .field,.phone-input{background:#fff}
+  .field input,.phone-input input,.country-picker{color:#0f1419}
+  .continue{background:#0f1419;color:#fff}
+  .continue:disabled{background:#d5d5d5;color:#71767b}
+  .legal a{color:#0f1419}
+  .notice{color:#b42318}
+  .privacy-trigger:hover{color:#0f1419}
+  .privacy-popup{background:#fff;color:#0f1419;box-shadow:0 6px 18px #0003}
+  .privacy-popup p{color:#71767b}
+  @media(max-width:700px){.dialog{background:#fff;box-shadow:none}}
+}
