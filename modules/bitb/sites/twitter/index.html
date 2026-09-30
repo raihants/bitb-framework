@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>Log in to X</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="dialog" aria-label="Log in to X">
+    <button class="back" type="button" aria-label="Go back">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"/></svg>
+    </button>
+    <header class="header">
+      <svg class="logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
+      <h1>See what's happening</h1>
+      <p class="subtitle">Select an option below:</p>
+    </header>
+    <section class="content" id="login-step" aria-label="Login options">
+      <div class="choices">
+        <button class="choice" id="phone-choice" type="button">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6.42383C3.00022 4.533 4.533 3.00022 6.42383 3H9.61816L12.2168 8.19727L10.6885 9.72461C11.4852 11.4181 12.5812 12.5137 14.2744 13.3105L15.8027 11.7832L21 14.3818V17.5762C20.9998 19.467 19.467 20.9998 17.5762 21C9.5262 21 3 14.4738 3 6.42383ZM5 6.42383C5 13.3692 10.6308 19 17.5762 19C18.3624 18.9998 18.9998 18.3624 19 17.5762V15.6182L16.1973 14.2168L15.207 15.207L14.7412 15.6738L14.1289 15.4287C11.3748 14.3271 9.67293 12.6252 8.57129 9.87109L8.32617 9.25879L8.79297 8.79297L9.7832 7.80273L8.38184 5H6.42383C5.63757 5.00022 5.00022 5.63757 5 6.42383Z"/></svg>
+          <span>Continue with phone</span>
+        </button>
+        <button class="choice google" id="google-choice" type="button">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285f4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34a853"/><path d="M5.84 14.09a6.6 6.6 0 0 1 0-4.18V7.07H2.18A11 11 0 0 0 1 12c0 1.78.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#fbbc05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#ea4335"/></svg>
+          <span>Continue with Google</span>
+        </button>
+        <button class="choice" id="apple-choice" type="button">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.18 0-.36-.02-.53-.06-.01-.18-.04-.56-.04-.95 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.22.05.45.05.68zm4.565 16.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.305 0-2.322-1.27-3.43-2.85C4.159 19.57 3 16.95 3 14.49c0-4.16 2.735-6.37 5.43-6.37 1.428 0 2.613.94 3.5.94.85 0 2.178-.99 3.81-.99 1.676 0 3.093.9 3.94 2.04-3.47 1.91-2.91 6.8 1.25 8.03z"/></svg>
+          <span>Continue with Apple</span>
+        </button>
+      </div>
+      <div class="divider"><span>or</span></div>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="username">Email or username</label>
+          <input id="username" type="text" autocomplete="username" aria-label="Email or username">
+        </div>
+        <button class="continue" id="continue" type="submit" disabled>Continue</button>
+      </form>
+      <p class="legal">By continuing, you agree to our <a href="https://x.com/en/tos" target="_blank" rel="noopener noreferrer">Terms of Service</a>, <a href="https://x.com/en/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://help.x.com/en/rules-and-policies/x-cookies" target="_blank" rel="noopener noreferrer">Cookie Use</a>.</p>
+      <p class="notice" id="notice" role="status" aria-live="polite"></p>
+    </section>
+    <section class="phone-step" id="phone-step" hidden aria-label="Phone number">
+      <svg class="logo phone-logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
+      <h2>Enter your phone number</h2>
+      <div class="phone-input">
+        <button class="country-picker" id="country-picker" type="button" aria-label="Select country, currently United States +1" aria-haspopup="listbox" aria-expanded="false" aria-controls="country-list"><span class="country-selected" aria-hidden="true">🇺🇸 +1 ▾</span></button>
+        <select id="country-code" hidden aria-hidden="true" tabindex="-1">
+          <option value="+1">🇺🇸 +1 United States</option>
+          <option value="+93">🇦🇫 +93 Afghanistan</option>
+          <option value="+355">🇦🇱 +355 Albania</option>
+          <option value="+213">🇩🇿 +213 Algeria</option>
+          <option value="+1684">🇦🇸 +1684 American Samoa</option>
+          <option value="+376">🇦🇩 +376 Andorra</option>
+          <option value="+244">🇦🇴 +244 Angola</option>
+          <option value="+1264">🇦🇮 +1264 Anguilla</option>
+          <option value="+672">🇦🇶 +672 Antarctica</option>
+          <option value="+1268">🇦🇬 +1268 Antigua and Barbuda</option>
+          <option value="+54">🇦🇷 +54 Argentina</option>
+          <option value="+374">🇦🇲 +374 Armenia</option>
+          <option value="+297">🇦🇼 +297 Aruba</option>
+          <option value="+61">🇦🇺 +61 Australia</option>
+          <option value="+880">🇧🇩 +880 Bangladesh</option>
+          <option value="+32">🇧🇪 +32 Belgium</option>
+          <option value="+55">🇧🇷 +55 Brazil</option>
+          <option value="+1">🇨🇦 +1 Canada</option>
+          <option value="+86">🇨🇳 +86 China</option>
+          <option value="+33">🇫🇷 +33 France</option>
+          <option value="+49">🇩🇪 +49 Germany</option>
+          <option value="+852">🇭🇰 +852 Hong Kong</option>
+          <option value="+91">🇮🇳 +91 India</option>
+          <option value="+62">🇮🇩 +62 Indonesia</option>
+          <option value="+39">🇮🇹 +39 Italy</option>
+          <option value="+81">🇯🇵 +81 Japan</option>
+          <option value="+60">🇲🇾 +60 Malaysia</option>
+          <option value="+52">🇲🇽 +52 Mexico</option>
+          <option value="+31">🇳🇱 +31 Netherlands</option>
+          <option value="+64">🇳🇿 +64 New Zealand</option>
+          <option value="+234">🇳🇬 +234 Nigeria</option>
+          <option value="+92">🇵🇰 +92 Pakistan</option>
+          <option value="+63">🇵🇭 +63 Philippines</option>
+          <option value="+65">🇸🇬 +65 Singapore</option>
+          <option value="+82">🇰🇷 +82 South Korea</option>
+          <option value="+34">🇪🇸 +34 Spain</option>
+          <option value="+66">🇹🇭 +66 Thailand</option>
+          <option value="+90">🇹🇷 +90 Turkey</option>
+          <option value="+971">🇦🇪 +971 United Arab Emirates</option>
+          <option value="+44">🇬🇧 +44 United Kingdom</option>
+          <option value="+84">🇻🇳 +84 Vietnam</option>
+        </select>
+        <input type="tel" placeholder="Phone number" aria-label="Phone number" autocomplete="tel-national">
+      </div>
+      <div class="country-menu" id="country-menu" hidden>
+        <label class="country-search"><span aria-hidden="true">⌕</span><input id="country-search" type="search" placeholder="Search" aria-label="Search countries" autocomplete="off"></label>
+        <div class="country-list" id="country-list" role="listbox" aria-label="Countries"></div>
+      </div>
+      <div class="phone-bottom">
+        <p>We'll send an SMS verification code. By entering your number, you agree to receive transactional messaging about your account. Others will be able to find you by phone number.</p>
+        <div class="privacy-wrap">
+          <button class="privacy-trigger" type="button" aria-expanded="false" aria-controls="privacy-popup">Privacy Options <span aria-hidden="true">⌄</span></button>
+          <div class="privacy-popup" id="privacy-popup" hidden>
+            <div><strong>Connect with friends you know</strong><p>Let people find your account by your phone number or email</p></div>
+            <button class="privacy-switch" type="button" role="switch" aria-label="Let people find your account by your phone number or email" aria-checked="true"><span></span></button>
+          </div>
+        </div>
+        <button type="button" class="continue phone-continue" disabled>Continue</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
