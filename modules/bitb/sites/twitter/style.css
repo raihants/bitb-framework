@@ -50,17 +50,18 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
 .stage-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-color:#686868 transparent;scrollbar-width:thin}
 .stage-scroll:after{content:"";display:block;height:72px}
 .password-step .stage-scroll:after{display:none}
-.password-step .stage-scroll{overflow-y:hidden}
+.password-step .stage-scroll{overflow-y:auto}
 .download-step .stage-scroll{padding-top:0}
 .stage-footer{flex:none;padding:0 32px 50px}
 .download-step .stage-footer{padding-bottom:50px}
 .download-step h2{font-size:26px;line-height:32px;margin:0;text-align:center}
 .stage-subtitle{margin:8px 0 32px;color:#808080;font-size:15px;text-align:center}
-.qr-illustration{width:220px;height:220px;margin:0 auto 32px;color:#f8f5ea}
-.qr-illustration svg{display:block}
+.qr-illustration{width:240px;height:240px;margin:0 auto 32px;color:#0f1419}
+.qr-illustration svg{display:block;border-radius:4px;background:#fff}
 .store-links{display:flex;justify-content:center;gap:12px}
-.store-links a{padding:8px 20px;border:1px solid #333;border-radius:999px;background:#111;color:#c0c0c0;text-decoration:none;font-size:14px;font-weight:700}
-.store-links a:hover{background:#222;color:#fff}
+.store-links a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid #333;border-radius:999px;background:#111;color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+.store-links a svg{flex:none}
+.store-links a:hover{background:#222}
 .download-divider{display:flex;align-items:center;gap:16px;margin:0 0 22px;color:#808080;font-size:14px;text-align:center}
 .download-divider:before,.download-divider:after{content:"";height:1px;flex:1;background:#34383c}
 .download-phone{display:block;width:100%;height:48px;border:1px solid #a5a29b;border-radius:999px;background:transparent;color:#fff;font-size:15px;font-weight:700}
@@ -80,7 +81,7 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
 .password-submit{display:block;width:100%;height:48px;border:0;border-radius:999px;background:#f8fafc;color:#000;font-size:17px;font-weight:500}
 .password-submit:disabled{background:#292725;color:#807b70;cursor:not-allowed}
 .password-footer .legal{width:100%;margin:12px 0 0;font-size:12px}
-.phone-step{position:relative;width:386px;max-width:calc(100% - 40px);height:100%;margin:32px auto 0}
+.phone-step{position:relative;width:386px;max-width:calc(100% - 40px);height:calc(100% - 32px);margin:32px auto 0}
 .phone-logo{display:block;width:48px;height:48px;fill:currentColor;margin:0 auto 34px;max-width:none}
 .phone-step h2{font-size:30px;line-height:36px;margin:0 0 20px;white-space:nowrap}
 .phone-input{display:flex;gap:8px;align-items:center;height:56px;border:2px solid #0ea5e9;padding:0 14px;border-radius:5px;background:#000}
@@ -98,7 +99,7 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
 .country-option:hover,.country-option:focus-visible{background:#334155}
 .country-option .country-name{flex:1}
 .country-option .country-flag{width:16px;font-size:12px}
-.phone-bottom{position:absolute;left:0;right:0;top:450px}
+.phone-bottom{position:absolute;left:0;right:0;bottom:28px}
 .phone-bottom>p{margin:0;color:#737373;font-size:12px;line-height:18px}
 .privacy-wrap{position:relative;margin-top:4px}
 .privacy-trigger{padding:0;border:0;background:transparent;color:#737373;font-size:12px;line-height:18px}
@@ -112,8 +113,11 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
 .privacy-switch[aria-checked="false"]{background:#536471}
 .privacy-switch[aria-checked="false"] span{margin-left:0}
 .phone-continue{width:calc(100% + 16px);margin:28px 0 0 -8px}
-@media(max-width:700px){body{display:block}.dialog{width:100%;height:100dvh;max-height:none;background:#000;border:0;border-radius:0}.header{max-width:calc(100% - 64px);width:auto;margin:32px 32px 0 68px;display:flex;align-items:center;gap:16px;min-height:30px}.logo{width:32px;height:32px;margin:0}h1{font-size:20px;line-height:25px;margin:0}.subtitle{display:none}.content{width:auto;max-width:none;margin:30px 32px 0}.choices{gap:21px}.divider{margin:19px 0 20px}.continue{margin-top:36px;width:100%;margin-left:0}.legal{width:100%;margin-left:0}.phone-step{width:auto;max-width:none;margin:32px 20px 0}.phone-step .phone-logo{width:48px;height:48px;margin:0 auto 34px;position:relative;left:-10px}.phone-step h2{font-size:24px;line-height:30px;white-space:normal}.country-menu{top:176px;left:18px;height:min(386px,calc(100dvh - 240px))}.phone-bottom{top:230px}.phone-continue{width:100%;margin-left:0}.privacy-popup{bottom:22px}}
-@media(max-width:700px){.login-footer{width:auto;max-width:none;margin:0 32px;padding-bottom:24px}.stage-logo{width:32px;height:32px;margin:20px auto 32px}.stage-scroll{padding:0 32px}.download-step h2,.password-step h2{font-size:26px;line-height:32px;text-align:center}.download-step .stage-subtitle{font-size:17px;line-height:24px;margin:20px 0}.qr-illustration,.store-links,.download-desktop{display:none}.download-mobile{display:block;padding:0 32px}.download-mobile a{display:block;width:100%;padding:12px;border-radius:999px;background:#f8fafc;color:#000;text-align:center;text-decoration:none;font-weight:700}.password-step .stage-scroll form{width:100%;max-width:none}.password-footer{padding:0 32px 32px}}
+.phone-notice:not(:empty){margin-bottom:0}
+@media(max-width:700px){body{display:block}.dialog{width:100%;height:100dvh;max-height:none;background:#000;border:0;border-radius:0}.header{max-width:calc(100% - 64px);width:auto;margin:32px 32px 0 68px;display:flex;align-items:center;gap:16px;min-height:30px}.logo{width:32px;height:32px;margin:0}h1{font-size:20px;line-height:25px;margin:0}.subtitle{display:none}.content{width:auto;max-width:none;margin:30px 32px 0}.choices{gap:21px}.divider{margin:19px 0 20px}.continue{margin-top:36px;width:100%;margin-left:0}.legal{width:100%;margin-left:0}.phone-step{width:auto;max-width:none;height:calc(100% - 32px);margin:32px 20px 0}.phone-step .phone-logo{width:48px;height:48px;margin:0 auto 34px;position:relative;left:-10px}.phone-step h2{font-size:24px;line-height:30px;white-space:normal}.country-menu{top:176px;left:18px;height:min(386px,calc(100dvh - 240px))}.phone-bottom{top:auto;bottom:32px}.phone-continue{width:100%;margin-left:0}.privacy-popup{bottom:22px}}
+@media(max-width:700px){.login-stage{height:auto;min-height:100%}.login-scroll{flex:none;overflow:visible}.login-scroll:after{display:none}.login-footer{width:auto;max-width:none;margin:36px 32px 0;padding-bottom:24px}.stage-logo{width:32px;height:32px;margin:20px auto 32px}.stage-scroll{padding:0 32px}.download-step h2,.password-step h2{font-size:26px;line-height:32px;text-align:center}.download-step .stage-subtitle{font-size:17px;line-height:24px;margin:20px 0}.qr-illustration,.store-links,.download-desktop{display:none}.download-mobile{display:block;padding:0 32px}.download-mobile a{display:block;width:100%;padding:12px;border-radius:999px;background:#f8fafc;color:#000;text-align:center;text-decoration:none;font-weight:700}.password-step .stage-scroll form{width:100%;max-width:none}.password-footer{padding:0 32px 32px}}
+@media(max-height:580px){.phone-step{min-height:540px}.phone-step .phone-bottom{bottom:20px}.dialog{overflow-y:auto}}
+@media(max-width:700px) and (max-height:580px){.phone-step{min-height:480px}}
 @media(max-width:360px){.header{gap:8px;margin-left:52px}h1{font-size:18px}.content{margin-left:16px;margin-right:16px}.login-footer{margin-left:16px;margin-right:16px}.stage-scroll{padding-left:16px;padding-right:16px}.stage-footer{padding-left:16px;padding-right:16px}}
 @media(prefers-color-scheme:light){
   :root{color-scheme:light;background:#d1d1d1;color:#0f1419}
@@ -129,7 +133,7 @@ h1{font-size:31px;line-height:38px;font-weight:700;margin:0 0 8px;white-space:no
   .divider:before,.divider:after{background:#d4d8db}
   .field,.phone-input{background:#fff}
   .field input,.phone-input input,.country-picker{color:#0f1419}
-  .store-links a{background:#f5f5f5;color:#0f1419}
+  .store-links a{background:#f5f5f5;color:#0f1419;border-color:#d4d8db}
   .download-phone{color:#0f1419}
   .download-mobile a,.password-submit{background:#0f1419;color:#fff}
   .password-submit:disabled{background:#d5d5d5;color:#71767b}
