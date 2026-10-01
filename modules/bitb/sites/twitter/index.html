@@ -13,6 +13,8 @@
     <button class="back" type="button" aria-label="Go back">
       <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"/></svg>
     </button>
+    <div class="login-stage" id="login-stage">
+      <div class="login-scroll">
     <header class="header">
       <svg class="logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
       <h1>See what's happening</h1>
@@ -37,12 +39,60 @@
       <form id="login-form" novalidate>
         <div class="field">
           <label for="username">Email or username</label>
-          <input id="username" type="text" autocomplete="username" aria-label="Email or username">
+          <input id="username" type="text" autocomplete="username" placeholder=" " required>
         </div>
-        <button class="continue" id="continue" type="submit" disabled>Continue</button>
       </form>
-      <p class="legal">By continuing, you agree to our <a href="https://x.com/en/tos" target="_blank" rel="noopener noreferrer">Terms of Service</a>, <a href="https://x.com/en/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://help.x.com/en/rules-and-policies/x-cookies" target="_blank" rel="noopener noreferrer">Cookie Use</a>.</p>
-      <p class="notice" id="notice" role="status" aria-live="polite"></p>
+    </section>
+      </div>
+      <div class="login-footer">
+        <button class="continue" id="continue" type="submit" form="login-form" disabled>Continue</button>
+        <p class="legal">By continuing, you agree to our <a href="https://x.com/en/tos" target="_blank" rel="noopener noreferrer">Terms of Service</a>, <a href="https://x.com/en/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://help.x.com/en/rules-and-policies/x-cookies" target="_blank" rel="noopener noreferrer">Cookie Use</a>.</p>
+        <p class="notice" id="notice" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <section class="stage download-step" id="download-step" hidden aria-label="Download the X app">
+      <svg class="stage-logo logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
+      <div class="stage-scroll">
+        <h2>Get the app to finish signing up using email</h2>
+        <p class="stage-subtitle">Email signups are only allowed on the apps</p>
+        <div class="qr-illustration" role="img" aria-label="QR code illustration, not scannable">
+          <svg id="download-qr" viewBox="0 0 220 220" width="220" height="220" aria-hidden="true"></svg>
+        </div>
+        <div class="store-links">
+          <a href="https://apps.apple.com/us/app/x/id333903271" target="_blank" rel="noopener noreferrer">● &nbsp; App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=com.twitter.android" target="_blank" rel="noopener noreferrer">▶ &nbsp; Google Play</a>
+        </div>
+      </div>
+      <div class="stage-footer download-desktop">
+        <p class="download-divider">Or sign up using a different method</p>
+        <button id="download-phone-choice" class="download-phone" type="button">Sign up with Phone</button>
+      </div>
+      <div class="stage-footer download-mobile">
+        <a href="https://x.com/download">Get the app</a>
+      </div>
+    </section>
+    <section class="stage password-step" id="password-step" hidden aria-label="Username and password login">
+      <svg class="stage-logo logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
+      <div class="stage-scroll">
+        <form id="password-form">
+          <h2>Login</h2>
+          <div class="field password-field">
+            <label for="password-username">Username</label>
+            <input id="password-username" type="text" placeholder=" " readonly>
+          </div>
+          <div class="field password-field">
+            <label for="password">Password</label>
+            <input id="password" type="password" autocomplete="off" placeholder=" " required>
+            <button id="toggle-password" type="button" aria-label="Show password" aria-pressed="false">◎</button>
+          </div>
+          <a class="forgot-password" href="https://x.com/account/begin_password_reset" target="_blank" rel="noopener noreferrer">Forgot password?</a>
+          <p class="notice" id="password-notice" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="stage-footer password-footer">
+        <button class="password-submit" type="submit" form="password-form" disabled>Continue</button>
+        <p class="legal">By continuing, you agree to our <a href="https://x.com/en/tos" target="_blank" rel="noopener noreferrer">Terms of Service</a>, <a href="https://x.com/en/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://help.x.com/en/rules-and-policies/x-cookies" target="_blank" rel="noopener noreferrer">Cookie Use</a>.</p>
+      </div>
     </section>
     <section class="phone-step" id="phone-step" hidden aria-label="Phone number">
       <svg class="logo phone-logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
