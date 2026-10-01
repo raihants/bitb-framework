@@ -2,8 +2,12 @@ const username = document.querySelector('#username');
 const continueButton = document.querySelector('#continue');
 const notice = document.querySelector('#notice');
 const phoneStep = document.querySelector('#phone-step');
-const loginStep = document.querySelector('#login-step');
-const header = document.querySelector('.header');
+const loginStage = document.querySelector('#login-stage');
+const downloadStep = document.querySelector('#download-step');
+const passwordStep = document.querySelector('#password-step');
+const passwordInput = document.querySelector('#password');
+const passwordSubmit = document.querySelector('.password-submit');
+const dialog = document.querySelector('.dialog');
 const countryCode = document.querySelector('#country-code');
 const countryPicker = document.querySelector('#country-picker');
 const countryMenu = document.querySelector('#country-menu');
@@ -97,13 +101,50 @@ username.addEventListener('input', () => {
 
 document.querySelector('#login-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  if (!username.value.trim()) return;
-  notice.textContent = 'This is a local preview. Sign-in requires the original service.';
+  const identifier = username.value.trim();
+  if (!identifier) return;
+  loginStage.hidden = true;
+  dialog.scrollTop = 0;
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier)) {
+    downloadStep.hidden = false;
+    downloadStep.querySelector('.stage-scroll').scrollTop = 0;
+  } else {
+    document.querySelector('#password-username').value = identifier;
+    passwordStep.hidden = false;
+    passwordStep.querySelector('.stage-scroll').scrollTop = 0;
+    passwordInput.focus({ preventScroll: true });
+  }
+});
+
+passwordInput.addEventListener('input', () => {
+  passwordSubmit.disabled = !passwordInput.value.trim();
+  document.querySelector('#password-notice').textContent = '';
+});
+
+document.querySelector('#toggle-password').addEventListener('click', (event) => {
+  const show = passwordInput.type === 'password';
+  passwordInput.type = show ? 'text' : 'password';
+  event.currentTarget.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  event.currentTarget.setAttribute('aria-pressed', String(show));
+  passwordInput.focus();
+});
+
+document.querySelector('#password-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (!passwordInput.value.trim()) return;
+  passwordInput.value = '';
+  passwordSubmit.disabled = true;
+  document.querySelector('#password-notice').textContent = 'Sign-in requires the original service. No password was submitted.';
+});
+
+document.querySelector('#download-phone-choice').addEventListener('click', () => {
+  downloadStep.hidden = true;
+  phoneStep.hidden = false;
+  phoneStep.querySelector('input[type="tel"]').focus();
 });
 
 document.querySelector('#phone-choice').addEventListener('click', () => {
-  loginStep.hidden = true;
-  header.hidden = true;
+  loginStage.hidden = true;
   phoneStep.hidden = false;
   phoneStep.querySelector('input[type="tel"]').focus();
 });
@@ -114,8 +155,18 @@ document.querySelector('.back').addEventListener('click', () => {
     privacyPopup.hidden = true;
     privacyTrigger.setAttribute('aria-expanded', 'false');
     phoneStep.hidden = true;
-    header.hidden = false;
-    loginStep.hidden = false;
+    loginStage.hidden = false;
+    username.focus();
+  } else if (!downloadStep.hidden || !passwordStep.hidden) {
+    downloadStep.hidden = true;
+    passwordStep.hidden = true;
+    passwordInput.value = '';
+    passwordInput.type = 'password';
+    passwordSubmit.disabled = true;
+    document.querySelector('#toggle-password').setAttribute('aria-label', 'Show password');
+    document.querySelector('#toggle-password').setAttribute('aria-pressed', 'false');
+    document.querySelector('#password-notice').textContent = '';
+    loginStage.hidden = false;
     username.focus();
   }
 });
@@ -152,5 +203,34 @@ document.querySelector('#google-choice').addEventListener('click', () => {
 document.querySelector('#apple-choice').addEventListener('click', () => {
   notice.textContent = 'Apple sign-in requires the original service.';
 });
+
+const qr = document.querySelector('#download-qr');
+for (let y = 0; y < 33; y++) {
+  for (let x = 0; x < 33; x++) {
+    const finder = [[0, 0], [26, 0], [0, 26]].some(([fx, fy]) => {
+      const dx = x - fx;
+      const dy = y - fy;
+      return dx >= 0 && dx < 7 && dy >= 0 && dy < 7 &&
+        (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
+    });
+    const emptyFinder = [[0, 0], [26, 0], [0, 26]].some(([fx, fy]) => x >= fx - 1 && x <= fx + 7 && y >= fy - 1 && y <= fy + 7);
+    const center = x >= 12 && x <= 20 && y >= 12 && y <= 20;
+    if (!finder && (emptyFinder || center || (x * 37 + y * 61 + x * y * 11) % 7 > 3)) continue;
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', String(x * 6 + 14));
+    dot.setAttribute('cy', String(y * 6 + 14));
+    dot.setAttribute('r', finder ? '2.8' : '2.1');
+    dot.setAttribute('fill', 'currentColor');
+    qr.append(dot);
+  }
+}
+const mark = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+mark.setAttribute('x', '110');
+mark.setAttribute('y', '125');
+mark.setAttribute('text-anchor', 'middle');
+mark.setAttribute('font-size', '46');
+mark.setAttribute('fill', 'currentColor');
+mark.textContent = '𝕏';
+qr.append(mark);
 
 username.focus({ preventScroll: true });
