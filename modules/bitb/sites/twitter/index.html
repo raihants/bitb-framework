@@ -9,11 +9,11 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="dialog" aria-label="Log in to X">
-    <button class="back" type="button" aria-label="Go back">
+  <main class="jf-element dialog" aria-label="Log in to X">
+    <button class="jf-element back" type="button" aria-label="Go back">
       <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"/></svg>
     </button>
-    <div class="login-stage" id="login-stage">
+    <div class="jf-element login-stage" id="login-stage">
       <div class="login-scroll">
     <header class="header">
       <svg class="logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
@@ -50,17 +50,17 @@
         <p class="notice" id="notice" role="status" aria-live="polite"></p>
       </div>
     </div>
-    <section class="stage download-step" id="download-step" hidden aria-label="Download the X app">
+    <section class="jf-element stage download-step" id="download-step" hidden aria-label="Download the X app">
       <svg class="stage-logo logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
       <div class="stage-scroll">
         <h2>Get the app to finish signing up using email</h2>
         <p class="stage-subtitle">Email signups are only allowed on the apps</p>
-        <div class="qr-illustration" role="img" aria-label="QR code illustration, not scannable">
-          <svg id="download-qr" viewBox="0 0 220 220" width="220" height="220" aria-hidden="true"></svg>
+        <div class="jf-element qr-illustration" role="img" aria-label="QR code illustration, not scannable">
+          <svg id="download-qr" viewBox="0 0 410 410" width="240" height="240" aria-hidden="true"></svg>
         </div>
-        <div class="store-links">
-          <a href="https://apps.apple.com/us/app/x/id333903271" target="_blank" rel="noopener noreferrer">● &nbsp; App Store</a>
-          <a href="https://play.google.com/store/apps/details?id=com.twitter.android" target="_blank" rel="noopener noreferrer">▶ &nbsp; Google Play</a>
+        <div class="jf-element store-links">
+          <a class="jf-element" href="https://m.x.com/?launch_app_store=true" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.18 0-.36-.02-.53-.06-.01-.18-.04-.56-.04-.95 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.22.05.45.05.68zm4.565 16.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"/></svg><span>App Store</span></a>
+          <a class="jf-element" href="https://m.x.com/?launch_app_store=true" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><g transform="translate(1.5 1.1) scale(0.040777)"><path fill="#EA4335" d="M199.9 237.8l-198.5 232.37c7.22,24.57 30.16,41.81 55.8,41.81 11.16,0 20.93,-2.79 29.3,-8.37l244.16 -139.46-130.76 -126.35z"/><path fill="#FBBC05" d="M433.91 205.1l-104.65 -60 -111.61 110.22 113.01 108.83 104.64 -58.6c18.14,-9.77 30.7,-29.3 30.7,-50.23 -1.4,-20.93 -13.95,-40.46 -32.09,-50.22z"/><path fill="#34A853" d="M199.42 273.45l129.85 -128.35 -241.37 -136.73c-8.37,-5.58 -19.54,-8.37 -30.7,-8.37 -26.5,0 -50.22,18.14 -55.8,41.86l198.02 231.59z"/><path fill="#4285F4" d="M1.39 41.86c-1.39,4.18 -1.39,9.77 -1.39,15.34v397.64c0,5.57 0,9.76 1.4,15.34l216.27 -214.86L1.39 41.86z"/></g></svg><span>Google Play</span></a>
         </div>
       </div>
       <div class="stage-footer download-desktop">
@@ -68,10 +68,10 @@
         <button id="download-phone-choice" class="download-phone" type="button">Sign up with Phone</button>
       </div>
       <div class="stage-footer download-mobile">
-        <a href="https://x.com/download">Get the app</a>
+        <a class="jf-element" href="https://m.x.com/?launch_app_store=true" target="_blank" rel="noopener noreferrer">Get the app</a>
       </div>
     </section>
-    <section class="stage password-step" id="password-step" hidden aria-label="Username and password login">
+    <section class="jf-element stage password-step" id="password-step" hidden aria-label="Username and password login">
       <svg class="stage-logo logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
       <div class="stage-scroll">
         <form id="password-form">
@@ -94,7 +94,7 @@
         <p class="legal">By continuing, you agree to our <a href="https://x.com/en/tos" target="_blank" rel="noopener noreferrer">Terms of Service</a>, <a href="https://x.com/en/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://help.x.com/en/rules-and-policies/x-cookies" target="_blank" rel="noopener noreferrer">Cookie Use</a>.</p>
       </div>
     </section>
-    <section class="phone-step" id="phone-step" hidden aria-label="Phone number">
+    <section class="jf-element phone-step" id="phone-step" hidden aria-label="Phone number">
       <svg class="logo phone-logo" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true"><path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/></svg>
       <h2>Enter your phone number</h2>
       <div class="phone-input">
@@ -158,6 +158,7 @@
           </div>
         </div>
         <button type="button" class="continue phone-continue" disabled>Continue</button>
+        <p class="notice phone-notice" role="status" aria-live="polite"></p>
       </div>
     </section>
   </main>
