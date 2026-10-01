@@ -15,6 +15,8 @@ const countrySearch = document.querySelector('#country-search');
 const countryList = document.querySelector('#country-list');
 const privacyTrigger = document.querySelector('.privacy-trigger');
 const privacyPopup = document.querySelector('#privacy-popup');
+const phoneInput = phoneStep.querySelector('input[type="tel"]');
+const phoneContinue = phoneStep.querySelector('.phone-continue');
 
 const countries = [...countryCode.options].map((option) => {
   const [flag, code, ...name] = option.textContent.trim().split(' ');
@@ -98,6 +100,14 @@ username.addEventListener('input', () => {
   continueButton.disabled = !username.value.trim();
   notice.textContent = '';
 });
+phoneInput.addEventListener('input', () => {
+  phoneContinue.disabled = !phoneInput.value.trim();
+  phoneStep.querySelector('.phone-notice').textContent = '';
+});
+phoneContinue.addEventListener('click', () => {
+  if (!phoneInput.value.trim()) return;
+  phoneStep.querySelector('.phone-notice').textContent = 'SMS verification requires the original service. No phone number was submitted.';
+});
 
 document.querySelector('#login-form').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -108,6 +118,7 @@ document.querySelector('#login-form').addEventListener('submit', (event) => {
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier)) {
     downloadStep.hidden = false;
     downloadStep.querySelector('.stage-scroll').scrollTop = 0;
+    document.activeElement?.blur();
   } else {
     document.querySelector('#password-username').value = identifier;
     passwordStep.hidden = false;
@@ -140,13 +151,13 @@ document.querySelector('#password-form').addEventListener('submit', (event) => {
 document.querySelector('#download-phone-choice').addEventListener('click', () => {
   downloadStep.hidden = true;
   phoneStep.hidden = false;
-  phoneStep.querySelector('input[type="tel"]').focus();
+  phoneInput.focus({ preventScroll: true });
 });
 
 document.querySelector('#phone-choice').addEventListener('click', () => {
   loginStage.hidden = true;
   phoneStep.hidden = false;
-  phoneStep.querySelector('input[type="tel"]').focus();
+  phoneInput.focus({ preventScroll: true });
 });
 
 document.querySelector('.back').addEventListener('click', () => {
@@ -155,6 +166,7 @@ document.querySelector('.back').addEventListener('click', () => {
     privacyPopup.hidden = true;
     privacyTrigger.setAttribute('aria-expanded', 'false');
     phoneStep.hidden = true;
+    phoneStep.querySelector('.phone-notice').textContent = '';
     loginStage.hidden = false;
     username.focus();
   } else if (!downloadStep.hidden || !passwordStep.hidden) {
@@ -205,32 +217,62 @@ document.querySelector('#apple-choice').addEventListener('click', () => {
 });
 
 const qr = document.querySelector('#download-qr');
-for (let y = 0; y < 33; y++) {
-  for (let x = 0; x < 33; x++) {
-    const finder = [[0, 0], [26, 0], [0, 26]].some(([fx, fy]) => {
-      const dx = x - fx;
-      const dy = y - fy;
-      return dx >= 0 && dx < 7 && dy >= 0 && dy < 7 &&
-        (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
-    });
-    const emptyFinder = [[0, 0], [26, 0], [0, 26]].some(([fx, fy]) => x >= fx - 1 && x <= fx + 7 && y >= fy - 1 && y <= fy + 7);
-    const center = x >= 12 && x <= 20 && y >= 12 && y <= 20;
-    if (!finder && (emptyFinder || center || (x * 37 + y * 61 + x * y * 11) % 7 > 3)) continue;
-    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    dot.setAttribute('cx', String(x * 6 + 14));
-    dot.setAttribute('cy', String(y * 6 + 14));
-    dot.setAttribute('r', finder ? '2.8' : '2.1');
-    dot.setAttribute('fill', 'currentColor');
-    qr.append(dot);
-  }
+const svgElement = (tag, attributes) => {
+  const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [name, value] of Object.entries(attributes)) element.setAttribute(name, String(value));
+  qr.append(element);
+};
+for (const [x, y] of [[20, 20], [320, 20], [20, 320]]) {
+  svgElement('rect', { x, y, width: 70, height: 70, rx: 12, fill: 'currentColor' });
+  svgElement('rect', { x: x + 10, y: y + 10, width: 50, height: 50, rx: 8, fill: 'white' });
+  svgElement('rect', { x: x + 20, y: y + 20, width: 30, height: 30, rx: 6, fill: 'currentColor' });
 }
-const mark = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-mark.setAttribute('x', '110');
-mark.setAttribute('y', '125');
-mark.setAttribute('text-anchor', 'middle');
-mark.setAttribute('font-size', '46');
-mark.setAttribute('fill', 'currentColor');
-mark.textContent = '𝕏';
-qr.append(mark);
+const qrDots = [
+  '8 9 12 13 14 15 16 17 18 21 22 24 25 26',
+  '9 10 11 12 15 18 23 24 25',
+  '8 12 13 14 18 20 21 23 24 26 27 28',
+  '10 11 12 16 19 21 22 23 25 27 28',
+  '8 11 18 19 20 25 26',
+  '9 13 15 16 20 22 23 24 25 26 28',
+  '8 10 12 14 16 18 20 22 24 26 28',
+  '8 9 12 13 16 21 23 24 25 27 28',
+  '5 6 14 15 16 17 20 21 22 24 26 28 30 32 34 36',
+  '3 4 9 13 14 15 19 20 22 23 24 25 26 28 31 32 33',
+  '0 2 3 4 5 6 8 9 10 13 14 16 18 19 20 24 25 26 27 28 30 31 35 36',
+  '0 1 3 5 8 9 11 14 15 17 18 19 20 22 23 24 26 30 31 33 35',
+  '0 1 4 6 8 9 10 11 27 30 35 36',
+  '0 2 3 5 8 9 11 27 28 29 31 34',
+  '2 3 6 7 8 11 27 28 29 31 33 36',
+  '0 4 5 8 10 11 27 29 30 32 33 34 36',
+  '3 4 5 6 8 10 25 26 30 32 34',
+  '1 3 5 8 9 10 26 27 28 31 33 34',
+  '0 3 4 5 6 8 9 10 11 25 27 29 30 33 36',
+  '0 3 4 9 11 27 28 30 31 32 33',
+  '5 6 7 8 25 26 29 30 31 32 33 34 35 36',
+  '0 1 3 4 5 9 10 11 26 27 28 29 31 32 35',
+  '1 2 6 10 27 29 30 33 36',
+  '2 4 5 8 10 11 26 27 29 30 31 33 35 36',
+  '0 3 6 8 9 25 26 28 29 30 34 36',
+  '0 2 3 5 7 8 10 11 12 13 14 16 17 20 21 24 25 26 28 30 31 33',
+  '0 4 5 6 9 11 13 17 21 22 26 30 32 33 35 36',
+  '0 3 5 7 10 11 14 19 20 21 24 27 29 32 33 34',
+  '0 4 5 6 7 8 13 15 16 18 19 21 24 25 28 29 30 31 32 34 35',
+  '8 11 12 15 17 18 21 22 23 27 28 32 33 35',
+  '11 13 17 21 22 23 24 25 27 28 30 32 33 34 36',
+  '8 9 10 11 13 14 15 16 18 20 21 22 23 24 26 27 28 32 33',
+  '9 11 14 16 17 18 22 24 25 26 27 28 29 30 31 32 34 35',
+  '10 12 14 15 16 22 25 26 28 30 34',
+  '9 10 11 12 13 20 21 22 23 24 25 26 27 29 31 34 36',
+  '9 10 13 15 16 19 20 22 23 26 27 28 29 31 32 33 36',
+  '9 10 11 12 14 15 18 19 21 27 28 33 36',
+];
+qrDots.forEach((row, y) => row.split(' ').forEach((x) => {
+  svgElement('circle', { cx: 25 + Number(x) * 10, cy: 25 + y * 10, r: 4.25, fill: 'currentColor' });
+}));
+svgElement('rect', { x: 160, y: 160, width: 90, height: 90, fill: 'white' });
+svgElement('path', {
+  d: 'M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z',
+  transform: 'translate(160 160) scale(3.75)', fill: 'currentColor',
+});
 
 username.focus({ preventScroll: true });
