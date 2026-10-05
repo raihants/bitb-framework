@@ -1375,3 +1375,256 @@ input::placeholder {
   }
 }
 
+.birthday-panel h1 {
+  text-align: left;
+}
+
+.birthday-description {
+  margin: 4px 0 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.birthday-summary {
+  min-height: 40px;
+  margin: 0 0 24px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.birthday-next {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 4px;
+  background: #fe2c55;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.birthday-next:disabled {
+  background: var(--soft);
+  color: var(--muted);
+  cursor: default;
+}
+
+.birthday-picker {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3fr .65fr .8fr;
+  height: 240px;
+  margin: 28px -12px 0;
+}
+
+.birthday-picker::before,
+.birthday-picker::after {
+  content: "";
+  position: absolute;
+  top: 96px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--border);
+  pointer-events: none;
+}
+
+.birthday-picker::after {
+  top: 144px;
+}
+
+.birthday-wheel {
+  min-width: 0;
+  overflow-y: auto;
+  padding: 96px 0;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  text-align: center;
+}
+
+.birthday-wheel::-webkit-scrollbar {
+  display: none;
+}
+
+.birthday-option {
+  height: 48px;
+  scroll-snap-align: center;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.birthday-option[aria-selected="true"] {
+  color: var(--text);
+}
+
+.birthday-option[hidden],
+.birthday-demo-note[hidden] {
+  display: none;
+}
+
+.birthday-demo-note {
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.google-prompt {
+  width: min(272px, calc(100vw - 32px));
+  height: min(556px, calc(100dvh - 40px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #414542;
+  border-radius: 9px;
+  background: #0e0e0e;
+  color: #f7f7f7;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .55);
+}
+
+.google-prompt::backdrop {
+  background: rgba(0, 0, 0, .36);
+}
+
+.google-prompt-windowbar {
+  height: 33px;
+  padding: 0 8px 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1b2517;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.google-prompt-close {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f7f7f7;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.google-prompt-toolbar {
+  min-height: 38px;
+  padding: 11px 16px;
+  border-bottom: 1px solid #383838;
+  color: #dedede;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.google-prompt-content {
+  height: calc(100% - 118px);
+  padding: 22px 18px 16px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.google-prompt-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #191319;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  text-shadow: -2px -2px #25f4ee, 2px 2px #fe2c55;
+}
+
+.google-prompt h2 {
+  margin: 22px 0 8px;
+  color: #f7f7f7;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.google-prompt-subtitle {
+  margin: 0;
+  color: #f7f7f7;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.google-prompt #google-prompt-description {
+  margin: 44px 0 26px;
+  color: #c7c7c7;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.google-prompt-action {
+  min-width: 116px;
+  height: 36px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 20px;
+  background: #bbc4ec;
+  color: #202c59;
+  cursor: pointer;
+  float: right;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.google-prompt-footnote {
+  min-height: 47px;
+  padding: 17px 18px 0;
+  color: #aaa;
+  font-size: 10px;
+}
+
+@media (max-width: 767px) {
+  .app-prompt-open:focus-visible {
+    outline: 2px solid #161823;
+    outline-offset: 3px;
+  }
+
+  .state[data-state="phone"] input:focus,
+  .state[data-state="phone"] input:focus-visible,
+  .state[data-state="email"] input:focus,
+  .state[data-state="email"] input:focus-visible {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .state[data-state="phone"] .field:focus-within,
+  .state[data-state="email"] .field:focus-within {
+    outline: none;
+    box-shadow: none;
+  }
+
+  body[data-view="birthday"] .close-link,
+  body[data-view="birthday"] .footer {
+    display: none;
+  }
+
+  body[data-view="birthday"] .header-back,
+  body[data-view="birthday"] .header-title {
+    display: block;
+  }
+
+  .birthday-panel.active {
+    width: calc(100% - 64px);
+    padding: 16px 0 24px;
+  }
+
+  .birthday-panel h1 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
