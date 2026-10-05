@@ -286,11 +286,100 @@ Zimbabwe|+263|ZW`.split("\n").map((entry) => entry.split("|"));
     button.querySelector('.icon')?.replaceChildren(icon.querySelector('svg').cloneNode(true));
   });
 
+  const birthdayWheels = [...document.querySelectorAll(".birthday-wheel")];
+  const birthdaySummary = document.querySelector(".birthday-summary");
+  const birthdayNext = document.querySelector(".birthday-next");
+  const birthdayNote = document.querySelector(".birthday-demo-note");
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const birthday = { month: new Date().getMonth(), day: new Date().getDate() - 1, year: 1 };
+  const years = Array.from({ length: 121 }, (_, index) => new Date().getFullYear() - index);
+  const wheelValues = {
+    month: months,
+    day: Array.from({ length: 31 }, (_, index) => index + 1),
+    year: years,
+  };
+  let birthdayTouched = false;
+
+  const updateBirthday = () => {
+    const maximumDay = new Date(years[birthday.year], birthday.month + 1, 0).getDate();
+    const dayWheel = birthdayWheels.find((wheel) => wheel.dataset.part === "day");
+    [...dayWheel.children].forEach((option, index) => {
+      option.hidden = index >= maximumDay;
+    });
+    if (birthday.day >= maximumDay) {
+      birthday.day = maximumDay - 1;
+      dayWheel.scrollTo({ top: birthday.day * 48, behavior: "instant" });
+    }
+    birthdayWheels.forEach((wheel) => {
+      [...wheel.children].forEach((option, index) => {
+        option.setAttribute("aria-selected", String(index === birthday[wheel.dataset.part]));
+      });
+    });
+    birthdaySummary.textContent = birthdayTouched
+      ? `${months[birthday.month]} ${birthday.day + 1}, ${years[birthday.year]}`
+      : "Birthday";
+    const selectedDate = new Date(years[birthday.year], birthday.month, birthday.day + 1);
+    selectedDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    birthdayNext.disabled = !birthdayTouched || selectedDate > today;
+    birthdayNote.hidden = true;
+  };
+
+  birthdayWheels.forEach((wheel) => {
+    const part = wheel.dataset.part;
+    wheelValues[part].forEach((value) => {
+      const option = document.createElement("div");
+      option.className = "birthday-option";
+      option.setAttribute("role", "option");
+      option.textContent = value;
+      wheel.append(option);
+    });
+    wheel.scrollTop = birthday[part] * 48;
+    let scrollTimer;
+    wheel.addEventListener("scroll", () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        if (!birthdayTouched) return;
+        birthday[part] = Math.max(0, Math.min(wheel.children.length - 1, Math.round(wheel.scrollTop / 48)));
+        updateBirthday();
+      }, 80);
+    });
+    wheel.addEventListener("pointerdown", () => { birthdayTouched = true; });
+    wheel.addEventListener("touchstart", () => { birthdayTouched = true; }, { passive: true });
+    wheel.addEventListener("wheel", () => { birthdayTouched = true; }, { passive: true });
+    wheel.addEventListener("click", (event) => {
+      const option = event.target.closest(".birthday-option");
+      if (!option || !wheel.contains(option) || option.hidden) return;
+      birthdayTouched = true;
+      birthday[part] = [...wheel.children].indexOf(option);
+      wheel.scrollTo({ top: birthday[part] * 48, behavior: "smooth" });
+      updateBirthday();
+    });
+    wheel.addEventListener("keydown", (event) => {
+      const directions = { ArrowUp: -1, ArrowDown: 1, Home: -Infinity, End: Infinity };
+      if (!(event.key in directions)) return;
+      event.preventDefault();
+      birthdayTouched = true;
+      const lastIndex = part === "day" ? new Date(years[birthday.year], birthday.month + 1, 0).getDate() - 1 : wheel.children.length - 1;
+      birthday[part] = Math.max(0, Math.min(lastIndex, birthday[part] + directions[event.key]));
+      wheel.scrollTo({ top: birthday[part] * 48, behavior: "instant" });
+      updateBirthday();
+    });
+  });
+  updateBirthday();
+  birthdayNext.addEventListener("click", () => { birthdayNote.hidden = false; });
+
   const show = (name) => {
+    if (name === "birthday") birthdayTouched = false;
     states.forEach((state) => state.classList.toggle("active", state.dataset.state === name));
     document.body.dataset.view = name;
-    document.querySelector(".header-title").textContent = name === "country" ? "Select country/region" : "Log in";
+    document.querySelector(".header-title").textContent = name === "country" ? "Select country/region" : name === "birthday" || name === "signup" ? "Sign up" : "Log in";
     document.querySelector(".shell")?.scrollTo({ top: 0, behavior: "instant" });
+    if (name === "birthday") {
+      birthdayWheels.forEach((wheel) => { wheel.scrollTop = birthday[wheel.dataset.part] * 48; });
+      updateBirthday();
+    }
     if (name === "country") countryList.scrollTop = 0;
   };
 
@@ -302,9 +391,9 @@ Zimbabwe|+263|ZW`.split("\n").map((entry) => entry.split("|"));
   });
 
   document.querySelector(".header-back")?.addEventListener("click", (event) => {
-    if (document.body.dataset.view !== "country") return;
+    if (document.body.dataset.view !== "country" && document.body.dataset.view !== "birthday") return;
     event.stopImmediatePropagation();
-    show("phone");
+    show(document.body.dataset.view === "birthday" ? "signup" : "phone");
   }, true);
 
   forms.forEach((form) => {
@@ -321,6 +410,25 @@ Zimbabwe|+263|ZW`.split("\n").map((entry) => entry.split("|"));
   const mobile = window.matchMedia("(max-width: 767px)");
   if (prompt && mobile.matches) prompt.showModal();
   prompt?.querySelector(".app-prompt-dismiss")?.addEventListener("click", () => prompt.close());
+  const googlePrompt = document.querySelector(".google-prompt");
+  let googleTrigger;
+  document.querySelectorAll(".google-choice").forEach((button) => {
+    button.addEventListener("click", () => {
+      googleTrigger = button;
+      googlePrompt.showModal();
+    });
+  });
+  const closeGooglePrompt = () => {
+    googlePrompt.close();
+    googleTrigger?.focus();
+  };
+  googlePrompt.querySelectorAll(".google-prompt-dismiss").forEach((button) => {
+    button.addEventListener("click", closeGooglePrompt);
+  });
+  googlePrompt.addEventListener("click", (event) => {
+    if (event.target === googlePrompt) closeGooglePrompt();
+  });
+  googlePrompt.addEventListener("close", () => googleTrigger?.focus());
   mobile.addEventListener("change", (event) => {
     if (!event.matches && prompt?.open) prompt.close();
   });
