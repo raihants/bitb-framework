@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="Static visual recreation of the Adobe Express sign-in page.">
+    <title>Adobe Express Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="global-navigation">
+      <a class="adobe-brand" href="#" aria-label="Adobe">
+        <img src="https://www.adobe.com/federal/assets/svgs/adobe-logo.svg" alt="Adobe, Inc." width="66" height="36">
+      </a>
+      <div class="nav-actions">
+        <button class="app-switcher" type="button" aria-label="Open Adobe apps">
+          <span class="app-grid" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+        </button>
+        <button class="nav-sign-in" type="button">Sign in</button>
+      </div>
+    </header>
+
+    <main>
+      <picture class="background-art" aria-hidden="true">
+        <source media="(min-width: 1600px)" srcset="https://www.adobe.com/express/media_1a7f3e60e21aa570623dae1611411579039e98301.png?width=2000&amp;format=webply&amp;optimize=medium">
+        <source media="(min-width: 1200px)" srcset="https://www.adobe.com/express/media_110d81e115b03a9e7bab304ee696d2805b26c5658.png?width=2000&amp;format=webply&amp;optimize=medium">
+        <source media="(min-width: 900px)" srcset="https://www.adobe.com/express/media_117da903c8b1fb03b74a5efb8edc7cbf8069a32a8.png?width=2000&amp;format=webply&amp;optimize=medium">
+        <source media="(min-width: 600px)" srcset="https://www.adobe.com/express/media_15f8a69453e1eca7c463c11e9966aea3a2f26026d.png?width=2000&amp;format=webply&amp;optimize=medium">
+        <img src="https://www.adobe.com/express/media_15f8a69453e1eca7c463c11e9966aea3a2f26026d.png?width=2000&amp;format=webply&amp;optimize=medium" alt="">
+      </picture>
+
+      <section class="login-stage" aria-label="Adobe Express account access">
+        <div class="susi-layout">
+          <img class="express-logo" src="https://www.adobe.com/express/code/icons/adobe-express-logo.svg" alt="Adobe Express" width="131" height="64">
+          <h1>Sign in or create account</h1>
+
+          <div class="account-tabs" role="tablist" aria-label="Account type">
+            <button id="individual-tab" class="account-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="individual-panel">Individual / Business</button>
+            <button id="student-tab" class="account-tab" type="button" role="tab" aria-selected="false" aria-controls="student-panel">Students / Teachers</button>
+          </div>
+
+          <div class="tab-panels">
+            <section id="individual-panel" class="auth-panel" role="tabpanel" aria-labelledby="individual-tab">
+              <div class="provider-list" aria-label="Sign-in options">
+                <button class="provider-button" type="button" data-provider="Google">
+                  <span class="provider-icon google-icon" aria-hidden="true">G</span>
+                  <span>Continue with Google</span>
+                </button>
+                <div class="provider-row">
+                  <button class="provider-icon-button" type="button" data-provider="Facebook" aria-label="Continue with Facebook">
+                    <span class="facebook-icon" aria-hidden="true">f</span>
+                  </button>
+                  <button class="provider-icon-button" type="button" data-provider="Apple" aria-label="Continue with Apple">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 12.9c0-2.7 2.2-4 2.3-4.1a5 5 0 0 0-3.9-2.1c-1.7-.2-3.2 1-4 1-1 0-2.5-1-4.1-1-2.1 0-4.1 1.3-5.2 3.2-2.2 3.8-.6 9.5 1.6 12.5 1.1 1.5 2.3 3.2 4 3.1 1.6-.1 2.2-1 4.1-1s2.4 1 4.1 1c1.7 0 2.8-1.5 3.8-3 1.2-1.8 1.7-3.5 1.7-3.6-.1 0-4.4-1.7-4.4-6zm-2.7-8c.9-1.1 1.5-2.6 1.3-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.4-1.3 3.9 1.4.1 2.9-.7 3.8-1.8z"/></svg>
+                  </button>
+                  <button class="provider-icon-button" type="button" data-provider="Microsoft" aria-label="Continue with Microsoft">
+                    <span class="microsoft-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="separator"><span>Or</span></div>
+
+              <form class="email-form" novalidate>
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" inputmode="email" autocomplete="off" spellcheck="false" aria-describedby="privacy-note">
+                <button class="continue-button" type="submit">Continue</button>
+                <p id="privacy-note" class="privacy-note">This local demonstration does not send or save account information.</p>
+              </form>
+            </section>
+
+            <section id="student-panel" class="auth-panel student-panel" role="tabpanel" aria-labelledby="student-tab" hidden>
+              <div class="education-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M4 17.5 24 7l20 10.5L24 28 4 17.5Z"/><path d="M12 22v10c6 6 18 6 24 0V22"/><path d="M44 18v14"/></svg>
+              </div>
+              <h2>Sign in with your school account</h2>
+              <p>Use your school or university credentials to access Adobe Express for Education.</p>
+              <button class="continue-button education-button" type="button" data-provider="school account">Continue</button>
+            </section>
+
+            <div class="guest-banner">
+              <strong>Not ready to Sign in?</strong>
+              <button class="guest-link" type="button">Continue as a guest</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="global-footer">
+      <div class="footer-inner">
+        <div class="footer-settings">
+          <button type="button"><span aria-hidden="true">◎</span> English (US) <span class="chevron" aria-hidden="true">⌄</span></button>
+          <button type="button">Indonesia - IDR Rp <span class="chevron" aria-hidden="true">⌄</span></button>
+        </div>
+        <div class="footer-right">
+          <nav class="social-links" aria-label="Social media">
+            <a href="#" aria-label="facebook">f</a>
+            <a href="#" aria-label="instagram">◎</a>
+            <a href="#" aria-label="twitter">𝕏</a>
+            <a href="#" aria-label="linkedin">in</a>
+          </nav>
+          <div class="legal-links">
+            <span>Copyright © 2026 Adobe. All rights reserved.</span><span class="slash">/</span>
+            <a href="#">Privacy</a><span class="slash">/</span>
+            <a href="#">Terms of Use</a><span class="slash">/</span>
+            <button type="button">Cookie preferences</button><span class="slash">/</span>
+            <a href="#">Do not sell or share my personal information</a><span class="slash">/</span>
+            <a href="#">Site Map</a><span class="slash">/</span>
+            <a href="#" class="adchoices">AdChoices</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
