@@ -63,7 +63,7 @@
   });
 
   document.querySelector('.nav-sign-in').addEventListener('click', () => {
-    document.querySelector('.susi-layout').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.location.href = 'auth.html';
   });
 
   document.querySelector('.app-switcher').addEventListener('click', () => {
@@ -82,3 +82,11 @@
     });
   });
 })();
+
+  const emailInput = document.querySelector('#email');
+  const continueButton = document.querySelector('.continue-button');
+  if (emailInput && continueButton) {
+    emailInput.addEventListener('input', () => {
+      continueButton.disabled = emailInput.value.trim() === '';
+    });
+  }

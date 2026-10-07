@@ -20,7 +20,7 @@
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           </span>
         </button>
-        <button class="nav-sign-in" type="button">Sign in</button>
+        <button class="nav-sign-in" type="button" onclick="window.location.href='auth.html'">Sign in</button>
       </div>
     </header>
 
@@ -45,30 +45,46 @@
 
           <div class="tab-panels">
             <section id="individual-panel" class="auth-panel" role="tabpanel" aria-labelledby="individual-tab">
-              <div class="provider-list" aria-label="Sign-in options">
+                            <div class="provider-list" aria-label="Sign-in options">
                 <button class="provider-button" type="button" data-provider="Google">
-                  <span class="provider-icon google-icon" aria-hidden="true">G</span>
+                  <span class="provider-icon google-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                  </span>
                   <span>Continue with Google</span>
                 </button>
-                <div class="provider-row">
-                  <button class="provider-icon-button" type="button" data-provider="Facebook" aria-label="Continue with Facebook">
-                    <span class="facebook-icon" aria-hidden="true">f</span>
-                  </button>
-                  <button class="provider-icon-button" type="button" data-provider="Apple" aria-label="Continue with Apple">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 12.9c0-2.7 2.2-4 2.3-4.1a5 5 0 0 0-3.9-2.1c-1.7-.2-3.2 1-4 1-1 0-2.5-1-4.1-1-2.1 0-4.1 1.3-5.2 3.2-2.2 3.8-.6 9.5 1.6 12.5 1.1 1.5 2.3 3.2 4 3.1 1.6-.1 2.2-1 4.1-1s2.4 1 4.1 1c1.7 0 2.8-1.5 3.8-3 1.2-1.8 1.7-3.5 1.7-3.6-.1 0-4.4-1.7-4.4-6zm-2.7-8c.9-1.1 1.5-2.6 1.3-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.4-1.3 3.9 1.4.1 2.9-.7 3.8-1.8z"/></svg>
-                  </button>
-                  <button class="provider-icon-button" type="button" data-provider="Microsoft" aria-label="Continue with Microsoft">
-                    <span class="microsoft-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-                  </button>
-                </div>
+                <button class="provider-button" type="button" data-provider="Facebook">
+                  <span class="provider-icon facebook-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#1877F2">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </span>
+                  <span>Continue with Facebook</span>
+                </button>
+                <button class="provider-button" type="button" data-provider="LINE">
+                  <span class="provider-icon line-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#00C300">
+                      <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 3.963 8.874 9.421 9.605.369.078.873.242 1.002.556.117.284.076.733.036 1.034 0 0-.129.771-.157.944-.047.288-.216 1.139 1.001.626 1.218-.512 6.574-3.87 8.972-6.625 1.144-1.309 1.725-2.651 1.725-3.957v-2.183zM9.542 13.069h-2.33a.471.471 0 01-.47-.471V8.46a.471.471 0 01.47-.471.471.471 0 01.471.471v3.666h1.859a.47.47 0 01.471.471.471.471 0 01-.471.472zm2.148 0a.471.471 0 01-.471-.471V8.46a.471.471 0 01.942 0v4.138a.471.471 0 01-.471.471zm4.72 0a.471.471 0 01-.397-.216l-2.076-2.92v2.665a.471.471 0 01-.942 0V8.46a.471.471 0 01.868-.261l2.075 2.919V8.46a.471.471 0 01.942 0v4.138a.471.471 0 01-.47.471zm2.846-3.194h-1.858v1.162h1.858a.471.471 0 010 .942h-2.33a.471.471 0 01-.47-.471V8.46a.471.471 0 01.47-.471h2.33a.471.471 0 010 .942h-1.858v1.07h1.858a.471.471 0 010 .942z"/>
+                    </svg>
+                  </span>
+                  <span>Continue with LINE</span>
+                </button>
+              </div>
+              <div class="more-options-container" style="text-align: left; margin-top: 16px;">
+                <a href="#" class="more-options-link" style="color: var(--blue); text-decoration: none; font-size: 15px;">More sign-in options</a>
               </div>
 
               <div class="separator"><span>Or</span></div>
 
-              <form class="email-form" novalidate>
-                <label for="email">Email address</label>
+                            <form class="email-form" novalidate>
+                <label for="email" style="font-weight: 600; font-size: 15px; margin-bottom: 8px; display: block;">Continue with email</label>
                 <input id="email" name="email" type="email" inputmode="email" autocomplete="off" spellcheck="false" aria-describedby="privacy-note">
-                <button class="continue-button" type="submit">Continue</button>
+                <!-- Keep continue button but make it conditionally visible or styled correctly -->
+                <button class="continue-button" type="submit" disabled>Continue</button>
                 <p id="privacy-note" class="privacy-note">This local demonstration does not send or save account information.</p>
               </form>
             </section>
