@@ -710,3 +710,12 @@ h1 {
     transition: none;
   }
 }
+
+.continue-button:disabled {
+  background: #f3f3f3;
+  color: #b8b8b8;
+  cursor: not-allowed;
+}
+.continue-button {
+  width: 100%;
+}
