@@ -1,0 +1,856 @@
+/* HBO Max — auth (Masuk) clone
+   Semua nilai diambil dari getComputedStyle() + CSSOM situs asli pada 1366x768,
+   1000, 800, dan 500 px, lalu dari bahasa desain "Fuse" (token --fuse-*). */
+
+@font-face {
+  font-family: "Handset Sans UI";
+  src: url("assets/fonts/HandsetSansUI-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Handset Sans UI";
+  src: url("assets/fonts/HandsetSansUI-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color_general_text_high: #fff;
+  --color_action_link_text_base: rgb(113, 184, 242);
+  --color_action_link_text_hover: #80c6ff;
+
+  --fuse-color-background-alt-surface-01-glass: hsla(0, 0%, 86.7%, 0.06);
+  --fuse-color-fill-action-shade: rgba(0, 0, 0, 0.2);
+  --fuse-color-foreground-onbase-text-01: #fff;
+  --fuse-color-foreground-onbase-text-02: hsla(0, 0%, 100%, 0.8);
+  --fuse-color-foreground-onbase-text-03: hsla(0, 0%, 100%, 0.7);
+  --fuse-color-foreground-onbase-text-action-accent: rgb(113, 184, 242);
+  --fuse-color-input-field-fill-focus: #000;
+  --fuse-color-input-outline-active: rgb(113, 184, 242);
+  --fuse-color-input-outline-inactive: hsla(0, 0%, 100%, 0.5);
+  --fuse-color-input-outline-error: #ff6d64;
+  --fuse-color-button-fill-loud: #ddd;
+  --fuse-color-button-fill-loud-hover: #fff;
+  --fuse-color-button-fill-loud-press: hsla(0, 0%, 100%, 0.8);
+  --fuse-color-button-label-loud: #000;
+  --fuse-color-button-fill-quiet: rgba(62, 62, 62, 0.75);
+  --fuse-color-button-fill-quiet-hover: rgba(74, 74, 74, 0.85);
+  --fuse-color-button-outline-quiet: transparent;
+  --fuse-color-button-ghost-fill-hover: rgba(62, 62, 62, 0.75);
+  --fuse-color-button-ghost-fill-press: rgba(62, 62, 62, 0.45);
+
+  --fuse-border-corner-input-field: 4px;
+  --fuse-border-corner-lg: 8px;
+
+  --chat-fab-disc: #506a85;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  background: #000;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #000;
+  color: var(--color_general_text_high);
+  font-family: "Handset Sans UI", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ------------------------------------------------------------ typography -- */
+
+.heading-utility {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 33.75px;
+}
+
+.body {
+  margin: 0;
+}
+
+.body-medium {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 17.55px;
+}
+
+.body-large {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.3px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+/* The Fuse type scale steps up once, at 1100px: heading, body and link all
+   switch from the bp-01 step to the bp-05 step there. The label and the
+   password input keep their own fixed sizes (16px / 18px) at every width. */
+
+@media (min-width: 1100px) {
+  .heading-utility {
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  .body-medium {
+    font-size: 16px;
+    line-height: 21.6px;
+  }
+}
+
+/* ---------------------------------------------------------------- shell -- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("assets/images/background.svg") center center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 48px;
+}
+
+.nav-logo {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 8px;
+}
+
+.nav-logo img {
+  display: block;
+  width: 44px;
+  height: 32px;
+}
+
+.nav-signup {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px 10px 14px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16.667px;
+  font-weight: 700;
+  line-height: 20.8337px;
+  text-decoration: none;
+}
+
+.nav-signup:hover {
+  background-color: var(--fuse-color-button-ghost-fill-hover);
+}
+
+.nav-signup:active {
+  background-color: var(--fuse-color-button-ghost-fill-press);
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+/* The sign-in column. The real page drives this with a breakpoint-specific
+   calc() ladder, not a single min(). Values below are the CSSOM rules. */
+
+.auth-container {
+  display: flow-root;
+  margin-right: auto;
+  margin-left: auto;
+  width: calc(-40px + 100vw);
+}
+
+@media (min-width: 440px) {
+  .auth-container {
+    width: calc(47.5px + 75vw);
+    max-width: 471px;
+  }
+}
+
+@media (min-width: 600px) {
+  .auth-container {
+    width: calc(58px + 75vw);
+    max-width: 560px;
+  }
+}
+
+@media (min-width: 800px) {
+  .auth-container {
+    width: calc(30px + 50vw);
+    max-width: 542px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .auth-container {
+    width: calc(120px + 75vw);
+    max-width: 566px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .auth-container {
+    width: calc(145px + 75vw);
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .auth-container {
+    width: calc(153.333px + 66.6667vw);
+    max-width: 600px;
+  }
+}
+
+/* ----------------------------------------------------------------- step -- */
+
+.utility-heading {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.utility-heading .description {
+  margin-top: 8px;
+  color: var(--fuse-color-foreground-onbase-text-01);
+}
+
+@media (min-width: 1100px) {
+  .utility-heading {
+    margin-top: 48px;
+  }
+}
+
+.form-wrapper {
+  padding: 30px;
+  border-radius: var(--fuse-border-corner-lg);
+}
+
+@media (max-width: 439px) {
+  .form-wrapper {
+    padding: 0;
+  }
+}
+
+@media (min-width: 440px) {
+  .form-wrapper {
+    background-color: var(--fuse-color-background-alt-surface-01-glass);
+  }
+}
+
+.form-internal-wrapper {
+  margin-bottom: 32px;
+}
+
+.form > [role="alert"] {
+  margin-bottom: 12px;
+  color: var(--fuse-color-input-outline-error);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17.55px;
+}
+
+@media (min-width: 1100px) {
+  .form > [role="alert"] {
+    font-size: 16px;
+    line-height: 21.6px;
+  }
+}
+
+/* ---------------------------------------------------------------- field -- */
+
+.styled-as-input-group-container,
+.input-group-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 600px) {
+  .styled-as-input-group-container,
+  .input-group-container {
+    margin-bottom: 24px;
+  }
+}
+
+@media (min-width: 800px) {
+  .styled-as-input-group-container,
+  .input-group-container {
+    margin-bottom: 18px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .styled-as-input-group-container,
+  .input-group-container {
+    margin-bottom: 24px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .styled-as-input-group-container,
+  .input-group-container {
+    margin-bottom: 30px;
+  }
+}
+
+.input-group-container > label,
+.input-group-container > .styled-as-label {
+  display: flex;
+  align-items: center;
+  order: 0;
+  padding-bottom: 4px;
+  color: var(--fuse-color-foreground-onbase-text-02);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21.6px;
+}
+
+.read-only-field-with-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: baseline;
+}
+
+.styled-as-input-group-container .read-only-field,
+.input-group-container .read-only-field {
+  word-break: break-all;
+}
+
+.styled-as-input-group-container input.read-only-field,
+.input-group-container input.read-only-field {
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  color: var(--color_general_text_high);
+  cursor: default;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 17.55px;
+  text-overflow: ellipsis;
+  field-sizing: content;
+}
+
+@media (min-width: 1100px) {
+  .styled-as-input-group-container input.read-only-field,
+  .input-group-container input.read-only-field {
+    font-size: 16px;
+    line-height: 21.6px;
+  }
+}
+
+.edit-button {
+  margin-left: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17.55px;
+}
+
+@media (min-width: 1100px) {
+  .edit-button {
+    font-size: 16px;
+    line-height: 21.6px;
+  }
+}
+
+.text-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 128px;
+  min-height: 56px;
+  padding: 14px 12px;
+  border: 1px solid var(--fuse-color-input-outline-inactive);
+  border-radius: var(--fuse-border-corner-input-field);
+  background: var(--fuse-color-fill-action-shade);
+}
+
+.text-input-wrapper:focus-within {
+  border-color: var(--fuse-color-input-outline-active);
+  background: var(--fuse-color-input-field-fill-focus);
+  outline: 3px solid var(--fuse-color-input-outline-active);
+  outline-offset: -3px;
+}
+
+.text-input-wrapper:has(.input.with-button) {
+  padding-inline-end: 60px;
+}
+
+.text-input-wrapper:has(.input:hover):not(:focus-within) {
+  outline: 2px solid var(--fuse-color-input-outline-inactive);
+  outline-offset: -2px;
+}
+
+.text-input-wrapper.has-error {
+  border-color: var(--fuse-color-input-outline-error);
+}
+
+/* Empty, but kept in the flow so the wrapper's 8px flex gap still offsets the
+   input from the inline start, matching the real prefix-slot geometry. */
+
+.phone-prefix {
+  flex: 0 0 auto;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  color: var(--color_general_text_high);
+  caret-color: var(--fuse-color-input-outline-active);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.3px;
+}
+
+.input::placeholder {
+  color: var(--fuse-color-foreground-onbase-text-03);
+}
+
+.text-input-wrapper > .trailing {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* ------------------------------------------------------------ eye toggle -- */
+
+.field-button-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.field-button-wrapper svg {
+  display: block;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  fill: var(--fuse-color-foreground-onbase-text-02);
+}
+
+.field-button-backplate {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.field-button-wrapper button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-width: auto;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  outline: 0;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.field-button-wrapper button:hover .field-button-backplate,
+.field-button-wrapper button:focus-visible .field-button-backplate {
+  width: 32px;
+  height: 32px;
+  background-color: var(--fuse-color-button-ghost-fill-hover);
+}
+
+.field-button-wrapper button:active .field-button-backplate {
+  background-color: var(--fuse-color-button-ghost-fill-press);
+}
+
+.field-button-wrapper button:hover svg,
+.field-button-wrapper button:focus-visible svg {
+  fill: var(--fuse-color-foreground-onbase-text-01);
+}
+
+.field-button-wrapper .icon-eye--open {
+  display: none;
+}
+
+.password-visible .icon-eye--open {
+  display: block;
+}
+
+.password-visible .icon-eye--crossed {
+  display: none;
+}
+
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------- button -- */
+
+.button-group {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 16px;
+}
+
+.button-group > .button {
+  flex-basis: fit-content;
+}
+
+@media (min-width: 600px) {
+  .button-group {
+    flex-direction: row;
+  }
+
+  .button-group > .button {
+    max-width: fit-content;
+  }
+}
+
+.button-group--vertical {
+  flex-direction: column;
+}
+
+.button-group--full-width > .button {
+  flex-grow: 1;
+  max-width: unset;
+}
+
+@media (min-width: 600px) {
+  .button-group--full-width > .button {
+    flex-basis: 0;
+  }
+}
+
+.or-separator {
+  font-weight: 700;
+}
+
+.button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 152px;
+  padding: 11px 24px 12px;
+  border: 0;
+  border-radius: var(--fuse-border-corner-lg);
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21.6px;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: inherit;
+}
+
+.button-text-content {
+  display: inline-block;
+  pointer-events: none;
+}
+
+.button--loud {
+  color: var(--fuse-color-button-label-loud);
+}
+
+.button--loud::before {
+  background-color: var(--fuse-color-button-fill-loud);
+}
+
+.button--loud:hover::before {
+  background-color: var(--fuse-color-button-fill-loud-hover);
+}
+
+.button--loud:active::before {
+  background-color: var(--fuse-color-button-fill-loud-press);
+}
+
+.button--quiet {
+  color: var(--fuse-color-foreground-onbase-text-01);
+}
+
+.button--quiet::before {
+  border-color: var(--fuse-color-button-outline-quiet);
+  background-color: var(--fuse-color-button-fill-quiet);
+}
+
+.button--quiet:hover::before {
+  border-width: 0;
+  background-color: var(--fuse-color-button-fill-quiet-hover);
+}
+
+.button--quiet:active::before {
+  border-width: 1px;
+  background-color: var(--fuse-color-button-fill-quiet);
+}
+
+/* ------------------------------------------------------------ text link -- */
+
+.link {
+  color: var(--color_action_link_text_base);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--color_action_link_text_hover);
+}
+
+.link--underline {
+  border-bottom: 1px solid var(--fuse-color-foreground-onbase-text-action-accent);
+}
+
+.help-center-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  text-align: center;
+}
+
+.help-center-links .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon.external {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.step-footer {
+  margin: 20px 0 24px;
+  text-align: center;
+}
+
+.forgot-password-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17.55px;
+  cursor: pointer;
+}
+
+@media (min-width: 1100px) {
+  .forgot-password-link {
+    font-size: 16px;
+    line-height: 21.6px;
+  }
+}
+
+/* --------------------------------------------------------------- footer -- */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-bottom: 24px;
+  padding: 144px 48px 16px;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid transparent;
+  opacity: 0.7;
+}
+
+.social-link:hover {
+  opacity: 1;
+}
+
+.social-link img {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
+}
+
+.legal-text {
+  margin: 0;
+  padding: 0 4px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17.55px;
+}
+
+.legal-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.legal-links a:hover .legal-text {
+  color: #fff;
+}
+
+/* -------------------------------------------------------------- chat FAB -- */
+
+/* A third-party pypestream widget sits here on the real page; the disc colour
+   is pixel-sampled from it. */
+
+.chat-fab {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.chat-fab::before {
+  content: "";
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--chat-fab-disc);
+}
+
+.chat-fab img {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+@media (max-width: 600px) {
+  .site-nav {
+    padding: 0 20px;
+  }
+
+  .nav-signup {
+    display: none;
+  }
+
+  .site-footer {
+    padding: 72px 20px 16px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
