@@ -201,16 +201,7 @@ window.addEventListener('message', (event) => {
   window.dispatchEvent(new CustomEvent('mock-oauth-callback', { detail: result }));
 });
 
-document.querySelector('#google-choice').addEventListener('click', () => {
-  mockAuthState = crypto.randomUUID();
-  const url = new URL('mock-auth.html', location.href);
-  url.searchParams.set('state', mockAuthState);
-  mockAuthPopup = window.open(url.href, 'local-auth-demo', 'popup,width=520,height=650');
-  if (!mockAuthPopup) {
-    mockAuthState = undefined;
-    notice.textContent = 'Allow pop-ups to test local authentication.';
-  }
-});
+// #google-choice handled later
 
 document.querySelector('#apple-choice').addEventListener('click', () => {
   notice.textContent = 'Apple sign-in requires the original service.';
@@ -276,3 +267,203 @@ svgElement('path', {
 });
 
 username.focus({ preventScroll: true });
+
+// ==============================================================
+// 1. VARIABEL ELEMEN DOM BITB
+// ==============================================================
+var overlay = document.getElementById('overlay');
+var popup = document.getElementById('bitb-window');
+var fakeUrl = document.getElementById('fake-url');
+
+var closeBtn = document.getElementById('btn-close');
+var maxBtn = document.getElementById('btn-maximize');
+var minBtn = document.getElementById('btn-minimize');
+
+var viewContainer = document.getElementById('view-container');
+var loadingSimulator = document.getElementById('loading-simulator');
+
+var googleView = document.getElementById('google-view');
+
+// Form Google
+var gEmailStep = document.getElementById('g-step-email');
+var gPasswordStep = document.getElementById('g-step-password');
+var gEmailForm = document.getElementById('g-demo-form');
+var gPasswordForm = document.getElementById('g-password-form');
+var gEmailInput = document.getElementById('g-email-input');
+var gPasswordInput = document.getElementById('g-password-input');
+var gDisplayEmail = document.getElementById('g-display-email');
+var btnBackEmail = document.getElementById('btn-back-email');
+
+// ==============================================================
+// 3. FUNGSI HELPER GOOGLE UI
+// ==============================================================
+function showGoogleStep(activeStep) {
+  gEmailStep.classList.add('hidden');
+  gPasswordStep.classList.add('hidden');
+  activeStep.classList.remove('hidden');
+}
+
+function clearGError(inputEl) {
+  inputEl.classList.remove('error');
+  var parent = inputEl.parentElement;
+  var existingError = parent.querySelector('.g-error-msg');
+  if (existingError) existingError.remove();
+}
+
+function showGError(inputEl, message) {
+  clearGError(inputEl);
+  var error = document.createElement('div');
+  error.className = 'g-error-msg';
+  error.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#b3261e"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> <span>' + message + '</span>';
+  inputEl.classList.add('error');
+  inputEl.parentElement.appendChild(error);
+}
+
+// ==============================================================
+// 4. PEMICU POPUP BROWSER (EFEK LOADING REALISTIS)
+// ==============================================================
+document.querySelector('#google-choice').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    googleView.classList.add('hidden');
+    viewContainer.style.display = 'none';
+    loadingSimulator.style.display = 'block';
+
+    fakeUrl.innerHTML = '<span class="url-dim">https://</span><span class="url-highlight">accounts.google.com</span><span class="url-dim">/v3/signin/identifier?app_domain=https%...</span>';
+    googleView.classList.remove('hidden');
+    gEmailInput.value = ''; gPasswordInput.value = '';
+    clearGError(gEmailInput); clearGError(gPasswordInput);
+    showGoogleStep(gEmailStep);
+
+    popup.classList.remove('minimized', 'maximized');
+    popup.style.transform = 'translate(-50%, -50%)';
+    popup.style.top = '50%'; popup.style.left = '50%';
+
+    overlay.classList.remove('hidden');
+    popup.classList.remove('hidden');
+
+    setTimeout(() => {
+        loadingSimulator.style.display = 'none';
+        viewContainer.style.display = 'flex';
+        gEmailInput.focus();
+    }, 600);
+});
+
+// ==============================================================
+// 5. KONTROL JENDELA
+// ==============================================================
+function closePopup() {
+    overlay.classList.add('hidden');
+    popup.classList.add('hidden');
+}
+
+function maximizePopup() {
+    if (popup.classList.contains('minimized')) popup.classList.remove('minimized');
+    popup.classList.toggle('maximized');
+}
+
+function minimizePopup() {
+    if (popup.classList.contains('maximized')) popup.classList.remove('maximized');
+    popup.classList.toggle('minimized');
+}
+
+closeBtn.addEventListener('click', closePopup);
+maxBtn.addEventListener('click', maximizePopup);
+minBtn.addEventListener('click', minimizePopup);
+overlay.addEventListener('click', closePopup);
+
+// ==============================================================
+// 6. LOGIKA FORM GOOGLE
+// ==============================================================
+gEmailForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  var emailVal = gEmailInput.value.trim();
+  var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+  if (!emailVal) { showGError(gEmailInput, 'Enter an email or phone number'); return; }
+  if (!gmailRegex.test(emailVal)) { showGError(gEmailInput, "Couldn't find your Google Account (Must use @gmail.com)"); return; }
+
+  clearGError(gEmailInput);
+  gDisplayEmail.textContent = emailVal;
+
+  viewContainer.style.opacity = '0';
+  setTimeout(() => {
+      showGoogleStep(gPasswordStep);
+      viewContainer.style.opacity = '1';
+      gPasswordInput.focus();
+  }, 400);
+});
+
+btnBackEmail.addEventListener('click', function() {
+  gPasswordInput.value = '';
+  clearGError(gPasswordInput);
+  viewContainer.style.opacity = '0';
+  setTimeout(() => {
+      showGoogleStep(gEmailStep);
+      viewContainer.style.opacity = '1';
+  }, 300);
+});
+
+gPasswordForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  var passVal = gPasswordInput.value;
+
+  if (!passVal || passVal.length < 8) {
+    showGError(gPasswordInput, 'Wrong password. Try again or click Forgot password to reset it.');
+    return;
+  }
+
+  clearGError(gPasswordInput);
+
+  alert('Logged in as: ' + gEmailInput.value);
+  closePopup();
+});
+
+gEmailInput.addEventListener('input', function() { clearGError(gEmailInput); });
+gPasswordInput.addEventListener('input', function() { clearGError(gPasswordInput); });
+
+// ==============================================================
+// 8. FITUR DRAG-AND-DROP WINDOW HALUS
+// ==============================================================
+var titlebar = document.getElementById('bitb-titlebar');
+var dragging = false;
+var dragOffsetX = 0;
+var dragOffsetY = 0;
+
+titlebar.addEventListener('mousedown', function(e) {
+  if (e.target.closest('.win-controls') ||
+      e.target.closest('.address-bar') ||
+      popup.classList.contains('maximized') ||
+      popup.classList.contains('minimized')) return;
+
+  dragging = true;
+  var rect = popup.getBoundingClientRect();
+  popup.style.transform = 'none';
+  popup.style.left = rect.left + 'px';
+  popup.style.top = rect.top + 'px';
+
+  dragOffsetX = e.clientX - rect.left;
+  dragOffsetY = e.clientY - rect.top;
+
+  popup.style.transition = 'none';
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', function(e) {
+  if (!dragging) return;
+  popup.style.left = (e.clientX - dragOffsetX) + 'px';
+  popup.style.top  = (e.clientY - dragOffsetY) + 'px';
+});
+
+document.addEventListener('mouseup', function () {
+  if (dragging) {
+    dragging = false;
+    popup.style.transition = 'opacity 0.15s ease-out';
+  }
+});
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape' && !popup.classList.contains('hidden')) {
+    closePopup();
+  }
+});
