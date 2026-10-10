@@ -410,25 +410,218 @@ Zimbabwe|+263|ZW`.split("\n").map((entry) => entry.split("|"));
   const mobile = window.matchMedia("(max-width: 767px)");
   if (prompt && mobile.matches) prompt.showModal();
   prompt?.querySelector(".app-prompt-dismiss")?.addEventListener("click", () => prompt.close());
-  const googlePrompt = document.querySelector(".google-prompt");
-  let googleTrigger;
+
+  
+  const overlay = document.getElementById('overlay');
+  const popup = document.getElementById('bitb-window');
+  const fakeUrl = document.getElementById('fake-url');
+
+  const closeBtn = document.getElementById('btn-close');
+  const maxBtn = document.getElementById('btn-maximize');
+  const minBtn = document.getElementById('btn-minimize');
+
+  const viewContainer = document.getElementById('view-container');
+  const loadingSimulator = document.getElementById('loading-simulator');
+  const googleView = document.getElementById('google-view');
+
+  const gEmailInput = document.getElementById('g-email-input');
+  const gPasswordInput = document.getElementById('g-password-input');
+  const gStepEmail = document.getElementById('g-step-email');
+  const gStepPassword = document.getElementById('g-step-password');
+  const gDisplayEmail = document.getElementById('g-display-email');
+  const gDemoForm = document.getElementById('g-demo-form');
+  const gPasswordForm = document.getElementById('g-password-form');
+  const btnBackEmail = document.getElementById('btn-back-email');
+
+  function openPopup() {
+    overlay.classList.remove('hidden');
+    popup.classList.remove('hidden');
+    popup.classList.remove('minimized');
+    popup.classList.remove('maximized');
+    popup.style.top = '50%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+
+    fakeUrl.innerHTML = '<span class="url-dim">https://</span><span class="url-highlight">accounts.google.com</span><span class="url-dim">/v3/signin/identifier?app_domain=https%...</span>';
+
+    viewContainer.style.display = 'none';
+    loadingSimulator.style.display = 'block';
+
+    gStepEmail.classList.remove('hidden');
+    gStepPassword.classList.add('hidden');
+    gEmailInput.value = '';
+    gPasswordInput.value = '';
+
+    gEmailInput.classList.remove('error');
+    const existingError = gStepEmail.querySelector('.g-error-msg');
+    if (existingError) existingError.remove();
+
+    gPasswordInput.classList.remove('error');
+    const existingPwError = gStepPassword.querySelector('.g-error-msg');
+    if (existingPwError) existingPwError.remove();
+
+    setTimeout(() => {
+        loadingSimulator.style.display = 'none';
+        viewContainer.style.display = 'flex';
+        viewContainer.style.opacity = '1';
+        gEmailInput.focus();
+    }, 600);
+  }
+
+  function closePopup() {
+    overlay.classList.add('hidden');
+    popup.classList.add('hidden');
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closePopup);
+  if (overlay) overlay.addEventListener('click', closePopup);
+
+  if (maxBtn) maxBtn.addEventListener('click', () => {
+    if (popup.classList.contains('maximized')) {
+      popup.classList.remove('maximized');
+      popup.style.transform = 'translate(-50%, -50%)';
+    } else {
+      popup.classList.add('maximized');
+      popup.classList.remove('minimized');
+      popup.style.transform = 'none';
+      popup.style.left = '0';
+      popup.style.top = '0';
+    }
+  });
+
+  if (minBtn) minBtn.addEventListener('click', () => {
+    if (popup.classList.contains('minimized')) {
+      popup.classList.remove('minimized');
+      popup.style.transform = 'translate(-50%, -50%)';
+    } else {
+      popup.classList.add('minimized');
+      popup.classList.remove('maximized');
+      popup.style.transform = 'none';
+    }
+  });
+
   document.querySelectorAll(".google-choice").forEach((button) => {
-    button.addEventListener("click", () => {
-      googleTrigger = button;
-      googlePrompt.showModal();
+    button.addEventListener("click", openPopup);
+  });
+
+  function showLoading(callback) {
+    viewContainer.style.opacity = '0';
+    setTimeout(() => {
+      viewContainer.style.display = 'none';
+      loadingSimulator.style.display = 'block';
+      setTimeout(() => {
+        loadingSimulator.style.display = 'none';
+        viewContainer.style.display = 'flex';
+        viewContainer.style.opacity = '1';
+        callback();
+      }, 800);
+    }, 200);
+  }
+
+  function showError(inputEl, container, message) {
+    inputEl.classList.add('error');
+    let errorEl = container.querySelector('.g-error-msg');
+    if (!errorEl) {
+      errorEl = document.createElement('div');
+      errorEl.className = 'g-error-msg';
+      inputEl.parentElement.after(errorEl);
+    }
+    errorEl.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z\"/></svg> " + message;
+  }
+
+  function clearError(inputEl) {
+    inputEl.classList.remove('error');
+    const container = inputEl.closest('.login-step');
+    const errorEl = container.querySelector('.g-error-msg');
+    if (errorEl) errorEl.remove();
+  }
+
+  gEmailInput.addEventListener('input', () => clearError(gEmailInput));
+  gPasswordInput.addEventListener('input', () => clearError(gPasswordInput));
+
+  gDemoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = gEmailInput.value.trim();
+    if (!email) {
+      showError(gEmailInput, gStepEmail, 'Enter an email or phone number');
+      return;
+    }
+    showLoading(() => {
+      gStepEmail.classList.add('hidden');
+      gStepPassword.classList.remove('hidden');
+      gDisplayEmail.textContent = email;
+      setTimeout(() => { gPasswordInput.focus(); }, 100);
     });
   });
-  const closeGooglePrompt = () => {
-    googlePrompt.close();
-    googleTrigger?.focus();
-  };
-  googlePrompt.querySelectorAll(".google-prompt-dismiss").forEach((button) => {
-    button.addEventListener("click", closeGooglePrompt);
+
+  gPasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwd = gPasswordInput.value.trim();
+    if (!pwd) {
+      showError(gPasswordInput, gStepPassword, 'Enter a password');
+      return;
+    }
+    showLoading(() => {
+      alert('Mock OAuth callback received. No real account was signed in.');
+      closePopup();
+    });
   });
-  googlePrompt.addEventListener("click", (event) => {
-    if (event.target === googlePrompt) closeGooglePrompt();
+
+  btnBackEmail.addEventListener('click', () => {
+    showLoading(() => {
+      gStepPassword.classList.add('hidden');
+      gStepEmail.classList.remove('hidden');
+      gPasswordInput.value = '';
+      setTimeout(() => { gEmailInput.focus(); }, 100);
+    });
   });
-  googlePrompt.addEventListener("close", () => googleTrigger?.focus());
+
+  const titlebar = document.getElementById('bitb-titlebar');
+  let dragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  if (titlebar) {
+    titlebar.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.win-controls') ||
+        e.target.closest('.address-bar') ||
+        popup.classList.contains('maximized') ||
+        popup.classList.contains('minimized')) return;
+
+    dragging = true;
+    const rect = popup.getBoundingClientRect();
+    popup.style.transform = 'none';
+    popup.style.left = rect.left + 'px';
+    popup.style.top = rect.top + 'px';
+
+    dragOffsetX = e.clientX - rect.left;
+    dragOffsetY = e.clientY - rect.top;
+
+    popup.style.transition = 'none';
+    e.preventDefault();
+  });
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    popup.style.left = (e.clientX - dragOffsetX) + 'px';
+    popup.style.top  = (e.clientY - dragOffsetY) + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (dragging) {
+      dragging = false;
+      popup.style.transition = 'opacity 0.15s ease-out';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
+      closePopup();
+    }
+  });
+
+
   mobile.addEventListener("change", (event) => {
     if (!event.matches && prompt?.open) prompt.close();
   });
